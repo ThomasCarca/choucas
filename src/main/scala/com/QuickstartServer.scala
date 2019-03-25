@@ -1,13 +1,13 @@
 package com
 
-import scala.concurrent.{ Await, ExecutionContext, Future }
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
-import scala.util.{ Failure, Success }
-
-import akka.actor.{ ActorRef, ActorSystem }
+import scala.util.{Failure, Success}
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
+import com.annotate.AnnotateRegistryActor
 
 object QuickstartServer extends App with RootRoutes {
 
@@ -15,7 +15,7 @@ object QuickstartServer extends App with RootRoutes {
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContext = system.dispatcher
 
-  // val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
+  val annotateRegistryActor: ActorRef = system.actorOf(AnnotateRegistryActor.props, "annotateRegistryActor")
 
   lazy val routes: Route = rootRoutes
 
