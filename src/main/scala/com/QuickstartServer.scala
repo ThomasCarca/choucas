@@ -1,4 +1,4 @@
-package com.example
+package com
 
 import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration.Duration
