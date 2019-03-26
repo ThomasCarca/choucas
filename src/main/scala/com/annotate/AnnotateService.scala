@@ -2,27 +2,30 @@ package com.annotate
 
 import scalaj.http.{Http, HttpResponse}
 import spray.json._
-import DefaultJsonProtocol._
 
 object AnnotateService {
 
 
-  def fetchAnnotations(text: String): String = {
+  def fetchAnnotations(text: String): URIs = {
     val response = Http("http://icc.pau.eisti.fr/rest/annotate").header("Accept", "application/json").postForm(Seq("text" -> text)).asString
-    filterUris(response).toJson.prettyPrint
+    filterURIs(response)
   }
 
-  def filterUris(response: HttpResponse[String]): Vector[JsValue] = {
+  def filterURIs(response: HttpResponse[String]): URIs = {
     val body = response.body.parseJson.asJsObject
     val maybeResources = body.fields.get("Resources")
     maybeResources match {
       case Some(resources) => {
         resources match {
-          case JsArray(elements) => elements.map(e => e.asJsObject.fields.get("@URI")).flatten
-          case _ => Vector.empty[JsValue]
+          case JsArray(elements) => {
+            val textURIs = elements.map(e => e.asJsObject.fields.get("@URI")).flatten
+            val uris = textURIs.map(text => text.toString().replace("\"", ""))
+            return URIs(uris.distinct)
+          }
+          case _ => URIs(Vector.empty[String])
         }
       }
-      case None => Vector.empty[JsValue]
+      case None => URIs(Vector.empty[String])
     }
   }
 

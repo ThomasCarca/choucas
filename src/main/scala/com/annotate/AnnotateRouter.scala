@@ -12,15 +12,14 @@ import com.annotate.AnnotateRegistryActor.Annotate
 
 import scala.concurrent.Future
 
-
-class AnnotateRouter(annotateRegistryActor: ActorRef) {
+class AnnotateRouter(annotateRegistryActor: ActorRef) extends AnnotateJsonSupport {
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
-  lazy val route: Route = get {
-    parameters('text.as[String]) { text =>
-      val annotation: Future[String] = (annotateRegistryActor ? Annotate(text)).mapTo[String]
-      complete(annotation)
+  lazy val route: Route = post {
+    entity(as[String]) { text =>
+      val annotations: Future[URIs] = (annotateRegistryActor ? Annotate(text)).mapTo[URIs]
+      complete(annotations)
     }
   }
 }
