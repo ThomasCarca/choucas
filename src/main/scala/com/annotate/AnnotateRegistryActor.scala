@@ -2,8 +2,6 @@ package com.annotate
 
 import akka.actor.{ Actor, ActorLogging, Props }
 
-final case class URIs(uris: Vector[String])
-
 object AnnotateRegistryActor {
   final case class Annotate(text: String)
   def props: Props = Props[AnnotateRegistryActor]
