@@ -1,6 +1,6 @@
 package com.annotate
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.ActorRef
 
 import scala.concurrent.duration._
 import akka.pattern.ask
@@ -9,13 +9,8 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.annotate.AnnotateRegistryActor.Annotate
-import spray.json.JsValue
 
 import scala.concurrent.Future
-
-
-import spray.json._
-import DefaultJsonProtocol._
 
 
 class AnnotateRouter(annotateRegistryActor: ActorRef) {
