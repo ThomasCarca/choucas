@@ -5,7 +5,6 @@ import spray.json._
 import DefaultJsonProtocol._
 
 object HikeService extends DefaultJsonProtocol {
-  var hikes : Seq[Hike] = Nil
 
   def getHikes() : Unit = {
     val hike = Http("https://choucas.blqn.fr/data/outing/")
