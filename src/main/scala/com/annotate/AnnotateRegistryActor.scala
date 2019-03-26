@@ -14,6 +14,6 @@ class AnnotateRegistryActor extends Actor with ActorLogging {
 
   def receive: Receive = {
     case AnnotateText(_) =>
-      sender() ! "I just annotated your text !"
+      sender() ! AnnotateService.fetchAnnotation("Pau est une ville du sud-ouest de la France.")
   }
 }
