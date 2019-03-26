@@ -1,25 +1,35 @@
 package com
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.event.Logging
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
+import akka.util.Timeout
 
 import scala.concurrent.duration._
-import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.server.directives.MethodDirectives.get
-import akka.http.scaladsl.server.directives.RouteDirectives.complete
+import com.annotate.AnnotateRouter
+import com.hike.HikeRouter
 
-import akka.util.Timeout
 
 trait RootRoutes {
 
   implicit def system: ActorSystem
 
-  lazy val log = Logging(system, classOf[RootRoutes])
+  def annotateRegistryActor: ActorRef
+  def hikeRegistryActor: ActorRef
 
-  implicit lazy val timeout = Timeout(5.seconds) // usually we'd obtain the timeout from the system's configuration
+  implicit lazy val timeout = Timeout(5.seconds)
 
   lazy val rootRoutes: Route =
-    get {
-      complete("Hello world !")
+    pathPrefix("annotate") {
+      new AnnotateRouter(annotateRegistryActor).route
+    } ~
+    pathPrefix("hike") {
+      new HikeRouter(hikeRegistryActor).route
+    } ~
+    pathEndOrSingleSlash {
+      get {
+        complete("Hello root endpoint !")
+      }
     }
 }
