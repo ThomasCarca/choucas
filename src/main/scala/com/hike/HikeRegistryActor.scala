@@ -1,6 +1,6 @@
 package com.hike
 
-import akka.actor.{ Actor, ActorLogging, Props }
+import akka.actor.{Actor, ActorLogging, Props}
 
 final case class Hike(idOrigin: Long, description: String)
 final case class Hikes(hikes: Seq[Hike])

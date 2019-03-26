@@ -8,6 +8,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import com.annotate.AnnotateRegistryActor
+import com.hike.HikeRegistryActor
 
 object QuickstartServer extends App with RootRoutes {
 
@@ -16,6 +17,7 @@ object QuickstartServer extends App with RootRoutes {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   val annotateRegistryActor: ActorRef = system.actorOf(AnnotateRegistryActor.props, "annotateRegistryActor")
+  val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props, "hikeRegistryActor")
 
   lazy val routes: Route = rootRoutes
 
