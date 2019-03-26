@@ -22,7 +22,7 @@ object AnnotateService {
     maybeResources match {
       case Some(resources) => {
         resources match {
-          case JsArray(elements) => Some(elements.map(e => e.asJsObject.fields.get("@surfaceForm")).flatten)
+          case JsArray(elements) => Some(elements.map(e => e.asJsObject.fields.get("@URI")).flatten)
           case _ => None
         }
       }
