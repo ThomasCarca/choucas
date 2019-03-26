@@ -8,6 +8,7 @@ import akka.util.Timeout
 
 import scala.concurrent.duration._
 import com.annotate.AnnotateRouter
+import com.hike.HikeRouter
 
 
 trait RootRoutes {
@@ -15,12 +16,16 @@ trait RootRoutes {
   implicit def system: ActorSystem
 
   def annotateRegistryActor: ActorRef
+  def hikeRegistryActor: ActorRef
 
   implicit lazy val timeout = Timeout(5.seconds)
 
   lazy val rootRoutes: Route =
     pathPrefix("annotate") {
       new AnnotateRouter(annotateRegistryActor).route
+    } ~
+    pathPrefix("hike") {
+      new HikeRouter(hikeRegistryActor).route
     } ~
     pathEndOrSingleSlash {
       get {

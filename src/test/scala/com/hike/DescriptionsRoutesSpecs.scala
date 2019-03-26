@@ -1,4 +1,4 @@
-package com.descriptions
+package com.hike
 
 class DescriptionsRoutesSpecs {
 
