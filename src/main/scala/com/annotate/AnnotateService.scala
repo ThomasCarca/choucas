@@ -9,24 +9,20 @@ object AnnotateService {
 
   def fetchAnnotations(text: String): String = {
     val response = Http("http://icc.pau.eisti.fr/rest/annotate").header("Accept", "application/json").postForm(Seq("text" -> text)).asString
-    val uris = filterUris(response)
-    uris match {
-      case Some(_) => uris.toJson.prettyPrint
-      case None => Vector.empty[JsValue].toJson.prettyPrint
-    }
+    filterUris(response).toJson.prettyPrint
   }
 
-  def filterUris(response: HttpResponse[String]): Option[Vector[JsValue]] = {
+  def filterUris(response: HttpResponse[String]): Vector[JsValue] = {
     val body = response.body.parseJson.asJsObject
     val maybeResources = body.fields.get("Resources")
     maybeResources match {
       case Some(resources) => {
         resources match {
-          case JsArray(elements) => Some(elements.map(e => e.asJsObject.fields.get("@URI")).flatten)
-          case _ => None
+          case JsArray(elements) => elements.map(e => e.asJsObject.fields.get("@URI")).flatten
+          case _ => Vector.empty[JsValue]
         }
       }
-      case None => None
+      case None => Vector.empty[JsValue]
     }
   }
 
