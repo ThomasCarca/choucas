@@ -20,6 +20,7 @@ lazy val root = (project in file(".")).
       "org.scalatest"     %% "scalatest"            % "3.0.5"         % Test,
 
       "org.scalaj" %% "scalaj-http" % "2.4.1",
-      "io.spray" %%  "spray-json" % "1.3.5"
+      "io.spray" %%  "spray-json" % "1.3.5",
+      "com.typesafe.play" %% "play-json" % "2.6.10"
     )
   )
