@@ -10,8 +10,6 @@ object AnnotateRegistryActor {
 class AnnotateRegistryActor extends Actor with ActorLogging {
   import AnnotateRegistryActor._
 
-  var products: Seq[Product] = Nil
-
   def receive: Receive = {
     case Annotate(text) =>
       sender() ! AnnotateService.fetchAnnotations(text)

@@ -1,6 +1,6 @@
 package com.annotate
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.ActorRef
 
 import scala.concurrent.duration._
 import akka.pattern.ask
@@ -9,23 +9,17 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.annotate.AnnotateRegistryActor.Annotate
-import spray.json.JsValue
 
 import scala.concurrent.Future
 
-
-import spray.json._
-import DefaultJsonProtocol._
-
-
-class AnnotateRouter(annotateRegistryActor: ActorRef) {
+class AnnotateRouter(annotateRegistryActor: ActorRef) extends AnnotateJsonSupport {
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
-  lazy val route: Route = get {
-    parameters('text.as[String]) { text =>
-      val annotation: Future[String] = (annotateRegistryActor ? Annotate(text)).mapTo[String]
-      complete(annotation)
+  lazy val route: Route = post {
+    entity(as[String]) { text =>
+      val annotations: Future[URIs] = (annotateRegistryActor ? Annotate(text)).mapTo[URIs]
+      complete(annotations)
     }
   }
 }
