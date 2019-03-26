@@ -3,7 +3,7 @@ package com.annotate
 import akka.actor.{ Actor, ActorLogging, Props }
 
 object AnnotateRegistryActor {
-  final case class AnnotateText(text: String)
+  final case class Annotate(text: String)
   def props: Props = Props[AnnotateRegistryActor]
 }
 
@@ -13,7 +13,7 @@ class AnnotateRegistryActor extends Actor with ActorLogging {
   var products: Seq[Product] = Nil
 
   def receive: Receive = {
-    case AnnotateText(_) =>
-      sender() ! AnnotateService.fetchAnnotation("Pau est une ville du sud-ouest de la France.")
+    case Annotate(text) =>
+      sender() ! AnnotateService.fetchAnnotations(text)
   }
 }
