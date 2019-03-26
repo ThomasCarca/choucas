@@ -9,8 +9,13 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.annotate.AnnotateRegistryActor.Annotate
+import spray.json.JsValue
 
 import scala.concurrent.Future
+
+
+import spray.json._
+import DefaultJsonProtocol._
 
 
 class AnnotateRouter(annotateRegistryActor: ActorRef) {
@@ -18,7 +23,9 @@ class AnnotateRouter(annotateRegistryActor: ActorRef) {
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
   lazy val route: Route = get {
-    val annotation: Future[String] = (annotateRegistryActor ? Annotate("Pau est une ville du sud-ouest de la France")).mapTo[String]
-    complete(annotation)
+    parameters('text.as[String]) { text =>
+      val annotation: Future[String] = (annotateRegistryActor ? Annotate(text)).mapTo[String]
+      complete(annotation)
+    }
   }
 }
