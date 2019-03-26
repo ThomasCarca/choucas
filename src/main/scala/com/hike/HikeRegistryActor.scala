@@ -2,9 +2,6 @@ package com.hike
 
 import akka.actor.{Actor, ActorLogging, Props}
 
-final case class Hike(idOrigin: Long, description: String)
-final case class Hikes(hikes: Seq[Hike])
-
 object HikeRegistryActor {
   final case object GetHikes
   def props: Props = Props[HikeRegistryActor]
