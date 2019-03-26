@@ -13,6 +13,6 @@ class HikeRegistryActor extends Actor with ActorLogging {
 
   def receive: Receive = {
     case GetHikes =>
-      sender() ! HikeService.getHikes
+      sender() ! HikeService.getAllHikes
   }
 }

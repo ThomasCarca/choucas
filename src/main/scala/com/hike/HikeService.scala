@@ -2,20 +2,20 @@ package com.hike
 
 import scalaj.http._
 import spray.json._
-import DefaultJsonProtocol._
 
 object HikeService extends DefaultJsonProtocol {
 
-  def getHikes() : Unit = {
-    val hike = Http("https://choucas.blqn.fr/data/outing/")
-      .header("Accept", "application/json")
-      .asString
-    val json = hike.body.parseJson
-    val jsonObj = json match {
-      case JsArray(elements) => elements.map(e => e.asJsObject.fields.get("description")).flatten
-      case _ => None
+  def getAllHikes() : String = {
+    val response = Http("https://choucas.blqn.fr/data/outing/").header("Accept", "application/json").asString
+    filterIdOrigin(response).toJson.prettyPrint
+  }
+
+  def filterIdOrigin(response: HttpResponse[String]): Vector[JsValue] = {
+    val body = response.body.parseJson
+    body match {
+      case JsArray(elements) => elements.flatMap(e => e.asJsObject.fields.get("idOrigin"))
+      case _ => Vector.empty[JsValue]
     }
-    val test = jsonObj
   }
 
 }
