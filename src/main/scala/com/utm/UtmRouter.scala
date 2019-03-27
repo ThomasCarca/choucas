@@ -16,7 +16,9 @@ class UtmRouter(utmRegistryActor: ActorRef) {
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
   lazy val route: Route = get {
-    val utm: Future[String] = (utmRegistryActor ? ToUTM("", "")).mapTo[String]
-    complete(utm)
+    parameters('lat, 'lon) { (lat, lon) =>
+      val utm: Future[String] = (utmRegistryActor ? ToUTM(lat, lon)).mapTo[String]
+      complete(utm)
     }
+  }
 }

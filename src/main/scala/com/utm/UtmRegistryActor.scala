@@ -1,6 +1,6 @@
 package com.utm
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.{ Actor, ActorLogging, Props }
 
 object UtmRegistryActor {
   final case class ToUTM(lat: String, lon: String)
@@ -9,9 +9,9 @@ object UtmRegistryActor {
 
 class UtmRegistryActor extends Actor with ActorLogging {
   import UtmRegistryActor._
-  
+
   def receive: Receive = {
     case ToUTM(lat, lon) =>
-      sender() ! ""
+      sender() ! UtmService.fetchUTM(lat, lon)
   }
 }
