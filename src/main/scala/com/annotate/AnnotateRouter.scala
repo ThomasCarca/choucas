@@ -16,10 +16,13 @@ class AnnotateRouter(annotateRegistryActor: ActorRef) extends AnnotateJsonSuppor
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
-  lazy val route: Route = post {
-    entity(as[String]) { text =>
-      val annotations: Future[URIs] = (annotateRegistryActor ? Annotate(text)).mapTo[URIs]
-      complete(annotations)
+  lazy val route: Route =
+    pathEndOrSingleSlash {
+      post {
+        entity(as[String]) { text =>
+          val annotations: Future[URIs] = (annotateRegistryActor ? Annotate(text)).mapTo[URIs]
+          complete(annotations)
+        }
+      }
     }
-  }
 }
