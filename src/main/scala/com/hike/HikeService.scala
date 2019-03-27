@@ -2,7 +2,9 @@ package com.hike
 
 import scalaj.http._
 import spray.json._
-import play.api.libs.json.{JsValue => PlayValue, Json}
+import play.api.libs.json.{Json, JsValue => PlayValue}
+
+import scala.collection.mutable.ArrayBuffer
 
 object HikeService extends DefaultJsonProtocol {
 
@@ -24,9 +26,13 @@ object HikeService extends DefaultJsonProtocol {
     }
   }
 
-  def filterDescription(response: HttpResponse[String]): Seq[PlayValue] = {
+  def filterDescription(response: HttpResponse[String]): PlayValue = {
     val body : PlayValue = Json.parse(response.body)
-    body.\\("description")
+    val arraybuff = body.\\("description")
+    arraybuff match {
+      case ArrayBuffer(element) => element
+      case _ => Json.parse("{}")
+    }
   }
 
 }
