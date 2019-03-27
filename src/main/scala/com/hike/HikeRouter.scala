@@ -17,15 +17,14 @@ class HikeRouter(hikeRegistryActor: ActorRef) {
 
   implicit lazy val timeout: Timeout = Timeout(180.seconds)
 
-  lazy val route: Route = pathEndOrSingleSlash{
-    get {
+  lazy val route: Route = get {
+    pathEndOrSingleSlash {
       val hikes: Future[String] = (hikeRegistryActor ? GetHikes).mapTo[String]
       complete(hikes)
-    }
-  } ~ pathPrefix(Segment) { id =>
-    get {
+    } ~ pathPrefix(Segment) { id =>
       val hike: Future[String] = (hikeRegistryActor ? GetHikeById(id)).mapTo[String]
       complete(hike)
     }
   }
+
 }
