@@ -9,5 +9,5 @@ final case class Coord(coords: Vector[String])
 trait AnnotateJsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
 
-  implicit val productsJsonFormat: RootJsonFormat[Coord] = jsonFormat1(Coord)
+  implicit val coordJsonFormat: RootJsonFormat[Coord] = jsonFormat1(Coord)
 }

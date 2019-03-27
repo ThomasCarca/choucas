@@ -27,8 +27,8 @@ object PinpointService {
   }
 
   def buildHttpString(msg: String): String = {
-    val placeToReserch = msg.split("/").last
-    val query = "select+%3Fcoor+where+{dbpedia-fr%3A" + placeToReserch + "+georss%3Apoint+%3Fcoor}&format=application%2Fsparql-results%2Bjson"
+    val placeToReaserch = msg.split("/").last
+    val query = "select+%3Fcoor+where+{dbpedia-fr%3A" + placeToReaserch + "+georss%3Apoint+%3Fcoor}&format=application%2Fsparql-results%2Bjson"
     val url = "https://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=" + query
     return url
   }

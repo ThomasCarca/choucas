@@ -1,6 +1,6 @@
 package com
 
-import akka.actor.{ActorRef, ActorSystem}
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.util.Timeout
@@ -26,18 +26,18 @@ trait RootRoutes {
     pathPrefix("annotate") {
       new AnnotateRouter(annotateRegistryActor).route
     } ~
-    pathPrefix("hike") {
-      new HikeRouter(hikeRegistryActor).route
-    } ~
-    pathPrefix("pinpoint") {
-      new PinpointRouter(pinpointRegistryActor).route
-    } ~
-    pathPrefix("utm") {
-      new UtmRouter(utmRegistryActor).route
-    } ~
-    pathEndOrSingleSlash {
-      get {
-        complete("Hello root endpoint !")
+      pathPrefix("hike") {
+        new HikeRouter(hikeRegistryActor).route
+      } ~
+      pathPrefix("pinpoint") {
+        new PinpointRouter(pinpointRegistryActor).route
+      } ~
+      pathPrefix("utm") {
+        new UtmRouter(utmRegistryActor).route
+      } ~
+      pathEndOrSingleSlash {
+        get {
+          complete("Hello root endpoint !")
+        }
       }
-    }
 }
