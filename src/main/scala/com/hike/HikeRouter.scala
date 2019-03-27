@@ -15,9 +15,9 @@ import scala.concurrent.Future
 
 class HikeRouter(hikeRegistryActor: ActorRef) {
 
-  implicit lazy val timeout: Timeout = Timeout(60.seconds)
+  implicit lazy val timeout: Timeout = Timeout(180.seconds)
 
-  lazy val route: Route = pathEnd{
+  lazy val route: Route = pathEndOrSingleSlash{
     get {
       val hikes: Future[String] = (hikeRegistryActor ? GetHikes).mapTo[String]
       complete(hikes)
