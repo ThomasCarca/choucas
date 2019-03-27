@@ -1,13 +1,17 @@
 package com.pinpoint
 
-import akka.actor.{ Actor, ActorLogging, PoisonPill }
+import akka.actor.{ Actor, ActorLogging, PoisonPill, Props }
 
-import com.pinpoint.PinpointRegistry.getPinpointFromUri
+object PinpointRegistryActor {
+  case class getPinpointFromUri(msg: String)
+  def props: Props = Props[PinpointRegistryActor]
+}
 
 class PinpointRegistryActor extends Actor with ActorLogging {
 
+  import PinpointRegistryActor._
+
   def receive = {
-    case "Kill yourself" => self ! PoisonPill
     case getPinpointFromUri(jsonData) => sender() ! PinpointService.processJsonData(jsonData)
   }
 

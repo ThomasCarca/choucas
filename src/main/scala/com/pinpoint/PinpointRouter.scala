@@ -1,6 +1,6 @@
 package com.pinpoint
 
-import akka.actor.{ Actor, ActorRef, ActorSystem, Props }
+import akka.actor.ActorRef
 
 import scala.concurrent.duration._
 import akka.pattern.ask
@@ -10,11 +10,11 @@ import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.QuickstartServer.system
-import com.pinpoint.PinpointRegistry.getPinpointFromUri
+import com.pinpoint.PinpointRegistryActor.getPinpointFromUri
 
 import scala.concurrent.{ ExecutionContext, Future }
 
-class PinpointRouter(PinpointRegistry: ActorRef) {
+class PinpointRouter(PinpointRegistryActor: ActorRef) {
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
@@ -22,11 +22,11 @@ class PinpointRouter(PinpointRegistry: ActorRef) {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   lazy val route: Route = pathPrefix(Segment) {
-    jsonData =>
-      get {
-        val respose: Future[String] = (PinpointRegistry ? getPinpointFromUri(jsonData)).mapTo[String]
-        complete(respose)
-      }
+    entity(as[String])
+    jsonData => {
+      val respose: Future[String] = (PinpointRegistryActor ? getPinpointFromUri(jsonData)).mapTo[String]
+      complete(respose)
+    }
   }
 }
 
