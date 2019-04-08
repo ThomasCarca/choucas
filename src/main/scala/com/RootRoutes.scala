@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 import com.annotate.AnnotateRouter
 import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
-import com.utm.UtmRouter
+import com.box.BoxRouter
 
 trait RootRoutes {
 
@@ -18,7 +18,7 @@ trait RootRoutes {
   def annotateRegistryActor: ActorRef
   def hikeRegistryActor: ActorRef
   def pinpointRegistryActor: ActorRef
-  def utmRegistryActor: ActorRef
+  def boxRegistryActor: ActorRef
 
   implicit lazy val timeout = Timeout(180.seconds)
 
@@ -32,8 +32,8 @@ trait RootRoutes {
       pathPrefix("pinpoint") {
         new PinpointRouter(pinpointRegistryActor).route
       } ~
-      pathPrefix("utm") {
-        new UtmRouter(utmRegistryActor).route
+      pathPrefix("box") {
+        new BoxRouter(boxRegistryActor).route
       } ~
       pathEndOrSingleSlash {
         get {

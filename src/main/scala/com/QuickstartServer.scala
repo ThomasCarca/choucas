@@ -10,7 +10,7 @@ import akka.stream.ActorMaterializer
 import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
-import com.utm.UtmRegistryActor
+import com.box.BoxRegistryActor
 
 object QuickstartServer extends App with RootRoutes {
 
@@ -21,7 +21,7 @@ object QuickstartServer extends App with RootRoutes {
   val annotateRegistryActor: ActorRef = system.actorOf(AnnotateRegistryActor.props, "annotateRegistryActor")
   val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props, "hikeRegistryActor")
   val pinpointRegistryActor: ActorRef = system.actorOf(PinpointRegistryActor.props, "pinpointRegistryActor")
-  val utmRegistryActor: ActorRef = system.actorOf(UtmRegistryActor.props, "utmRegistryActor")
+  val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
 
   lazy val routes: Route = rootRoutes
 

@@ -1,4 +1,4 @@
-package com.utm
+package com.box
 
 import akka.actor.ActorRef
 import akka.pattern.ask
@@ -6,13 +6,13 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
-import com.utm.UtmRegistryActor.ToUTM
+import com.box.BoxRegistryActor.ToBoundingBox
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class UtmRouter(utmRegistryActor: ActorRef) extends UtmJsonSupport {
+class BoxRouter(boxRegistryActor: ActorRef) extends BoxJsonSupport {
 
   import DefaultJsonProtocol._
 
@@ -21,8 +21,8 @@ class UtmRouter(utmRegistryActor: ActorRef) extends UtmJsonSupport {
   lazy val route: Route = pathEndOrSingleSlash {
     post {
       entity(as[Vector[Coordinate]]) { coordinates =>
-        val utm: Future[String] = (utmRegistryActor ? ToUTM(coordinates)).mapTo[String]
-        complete(utm)
+        val box: Future[String] = (boxRegistryActor ? ToBoundingBox(coordinates)).mapTo[String]
+        complete(box)
       }
     }
   }

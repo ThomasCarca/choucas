@@ -21,7 +21,7 @@ class AnnotateRoutesSpecs extends WordSpec with Matchers with ScalaFutures with 
 
   override val pinpointRegistryActor: ActorRef = null
 
-  override val utmRegistryActor: ActorRef = null
+  override val boxRegistryActor: ActorRef = null
 
   lazy val routes: Route = rootRoutes
 
