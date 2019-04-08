@@ -16,7 +16,7 @@ class TileRouter(tileRegistryActor: ActorRef) {
   implicit lazy val timeout: Timeout = Timeout(180.seconds)
 
   lazy val route: Route = get {
-    parameters('imageName) { imageName =>
+    path(Segment) { imageName =>
        val tiledImage: Future[String] = (tileRegistryActor ? TileImage(imageName)).mapTo[String]
        complete(tiledImage)
     }

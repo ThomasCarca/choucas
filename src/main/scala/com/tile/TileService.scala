@@ -1,19 +1,31 @@
 package com.tile
 
+import java.io.File
+
 import spray.json.DefaultJsonProtocol
 
-import scala.reflect.io.{Directory, File}
+import scala.sys.process.Process
 
 object TileService extends DefaultJsonProtocol {
-  def TileImage(imageName: String): String = "stop"
+  def TileImage(imageName: String): String = {
+    val file = getImageNameInDirectory(imageName)
+    val doGdalPython = Process("gdal2tiles.py ".concat(file + " " + imageName))
+    "Image tiled in /res/".concat(imageName)
+  }
 
-  def findImageInDirectory(imageName: String): List[File] = {
-    val d = new Directory("/res")
-    if (d.exists && d.isDirectory) {
-      d.listFiles.filter(_.isFile).toList
+  def getImageNameInDirectory(imageName: String): Option[String] = {
+    val d = new File("/res")
+    val fileName: Option[String] = if (d.exists && d.isDirectory) {
+      d.listFiles.filter(_.isFile).toList.filter { file =>
+        file.getName.startsWith(imageName)
+      } match {
+        case Nil => None
+        case list => Some(list.head.getName)
+      } // get first
     } else {
-      List[File]()
+      None
     }
+    fileName
   }
 
   def doTile(file: File, dirName: String): String = {
