@@ -7,18 +7,23 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.utm.UtmRegistryActor.ToUTM
+import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class UtmRouter(utmRegistryActor: ActorRef) {
+class UtmRouter(utmRegistryActor: ActorRef) extends UtmJsonSupport {
+
+  import DefaultJsonProtocol._
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
-  lazy val route: Route = get {
-    parameters('lat, 'lon) { (lat, lon) =>
-      val utm: Future[String] = (utmRegistryActor ? ToUTM(lat, lon)).mapTo[String]
-      complete(utm)
+  lazy val route: Route = pathEndOrSingleSlash {
+    post {
+      entity(as[Vector[Coordinate]]) { coordinates =>
+        val utm: Future[String] = (utmRegistryActor ? ToUTM(coordinates)).mapTo[String]
+        complete(utm)
+      }
     }
   }
 }
