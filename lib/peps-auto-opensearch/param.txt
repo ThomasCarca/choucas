@@ -1,0 +1,64 @@
+#  ____                      _            
+# / ___|___  _ __ ___  _ __ | |_ ___  ___ 
+#| |   / _ \| '_ ` _ \| '_ \| __/ _ \/ __|
+#| |__| (_) | | | | | | |_) | ||  __/\__ \
+# \____\___/|_| |_| |_| .__/ \__\___||___/
+#                     |_|                 
+#
+# Utilisation du proxy (o/n)
+PROXY_USE=
+# Compte proxy : laisser vide si pas de proxy utilise
+PROXY_LOG=
+PROXY_PWD=
+
+# Compte PEPS
+PEPS_LOG=
+PEPS_PWD=
+
+# Compte ftp hpss
+HPSS_LOG=
+HPSS_PWD=
+#DNS du serveur HPSS 
+HPSS_DNS=
+
+
+#  _____                       _                          _     
+# / ___ \                     | |                        | |    
+#| |   | |____   ____ ____     \ \   ____ ____  ____ ____| | _  
+#| |   | |  _ \ / _  )  _ \     \ \ / _  ) _  |/ ___) ___) || \ 
+#| |___| | | | ( (/ /| | | |_____) | (/ ( ( | | |  ( (___| | | |
+# \_____/| ||_/ \____)_| |_(______/ \____)_||_|_|   \____)_| |_|
+#        |_|                                                    
+#
+# Requete OpenSearch a executer (voir exemples)
+#REQ_OS@https://peps.cnes.fr/resto/api/collections/S3/search.atom?q=&instrument=OLCI&productType=OL_1_EFR___&startDate=2016-12-05&maxRecords=500
+#REQ_OS@https://peps.cnes.fr/resto/api/collections/S2ST/search.atom?q=TOULOUSE
+REQ_OS@
+
+#protocole utilise :
+PROTOCOL=HTTP
+
+
+#  _______                 _____        _        
+# |__   __|               |  __ \      | |       
+#    | |_   _ _ __   ___  | |  | | __ _| |_ __ _ 
+#    | | | | | '_ \ / _ \ | |  | |/ _` | __/ _` |
+#    | | |_| | |_) |  __/ | |__| | (_| | || (_| |
+#    |_|\__, | .__/ \___| |_____/ \__,_|\__\__,_|
+#        __/ | |                                 
+#       |___/|_|                                 
+#
+#
+#
+# # Type de donnees (S1A, S1B, S2A, S2B ou S3A)
+TYPE_DATA=
+
+# Collection (S1,S2,S2ST,S3) : ce champ doit etre coherent avec celui mis dans la requete
+COLLECTION=
+
+# Repertoire
+LOCAL_DIR=
+
+
+
+
