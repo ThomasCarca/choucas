@@ -9,5 +9,5 @@ final case class URIs(uris: Vector[String])
 trait AnnotateJsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
 
-  implicit val productsJsonFormat: RootJsonFormat[URIs] = jsonFormat1(URIs)
+  implicit val URIsJsonFormat: RootJsonFormat[URIs] = jsonFormat1(URIs)
 }
