@@ -1,16 +1,17 @@
 package com
 
-import scala.concurrent.{ Await, ExecutionContext, Future }
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.Duration
-import scala.util.{ Failure, Success }
-import akka.actor.{ ActorRef, ActorSystem }
+import scala.util.{Failure, Success}
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
-import com.utm.UtmRegistryActor
+import com.box.BoxRegistryActor
+import com.tile.TileRegistryActor
 
 object QuickstartServer extends App with RootRoutes {
 
@@ -21,7 +22,8 @@ object QuickstartServer extends App with RootRoutes {
   val annotateRegistryActor: ActorRef = system.actorOf(AnnotateRegistryActor.props, "annotateRegistryActor")
   val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props, "hikeRegistryActor")
   val pinpointRegistryActor: ActorRef = system.actorOf(PinpointRegistryActor.props, "pinpointRegistryActor")
-  val utmRegistryActor: ActorRef = system.actorOf(UtmRegistryActor.props, "utmRegistryActor")
+  val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
+  val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
 
   lazy val routes: Route = rootRoutes
 
