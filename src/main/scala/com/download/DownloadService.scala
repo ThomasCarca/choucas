@@ -1,45 +1,40 @@
 package com.download
 
+import java.text.SimpleDateFormat
 import java.util.Date
 
 import com.box.BoundingBox
 import scalaj.http.Http
-import play.api.libs.json.{JsArray, JsBoolean, JsDefined, JsNull, JsNumber, JsObject, JsString, JsUndefined, Json, JsValue => PlayValue}
+import play.api.libs.json.{JsArray, JsBoolean, JsDefined, JsNull, JsNumber, JsObject, JsString, Json, JsValue => PlayValue}
 
 
 object DownloadService {
 
-  def fetchDownloadUrls(box: BoundingBox): Vector[ImageInfo] = {
+  private val formatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+  def fetchImagesInfo(box: BoundingBox): Vector[ImageInfo] = {
     val response = Http(s"https://peps.cnes.fr/resto/api/collections/S2/search.json?box=${box.toString()}&startDate=2016-12-01&completionDate=2018-12-31").header("Accept", "application/json").asString
     val body : PlayValue = Json.parse(response.body)
     val jsFeatures = body.\("features")
-    val imageInfos: Vector[ImageInfo] = jsFeatures match {
+    val imagesInfo: Vector[ImageInfo] = jsFeatures match {
       case JsDefined(features) => features match {
         case JsArray(images) => images.map(image => {
-          ImageInfo("", "", "", new Date())
+          val properties = image \ "properties"
+          val download: String = (properties \ "services" \ "download" \ "url").get.as[String]
+          val preview: String = (properties \ "quicklook").get.as[String]
+          val cloud: Float = (properties \ "cloudCover").get match {
+            case JsNull => Float.NaN
+            case JsNumber(value) => value.toFloat
+          }
+          val date: Date = formatter.parse((properties \ "startDate").get.as[String])
+          ImageInfo(download, preview, cloud, date)
         }).to[Vector]
         case _ => Vector.empty
       }
-      case undefined: JsUndefined => Vector.empty
+      case _ => Vector.empty
     }
-    return imageInfos
+    return imagesInfo
   }
-
-
-//  def fetchDownloadUrls(box: BoundingBox): Vector[String] = {
-//    val response = Http(s"https://peps.cnes.fr/resto/api/collections/S2/search.json?box=${box.toString()}&startDate=2016-12-01&completionDate=2018-12-31").header("Accept", "application/json").asString
-//    val body = response.body.parseJson
-//    val jsFeatures = body.asJsObject.fields.get("features")
-//    val length = jsFeatures match {
-//      case Some(features) => features match {
-//        case JsArray(elements) => elements.foreach(js => println(js))
-//        case _ => "-1"
-//      }
-//      case None => "-1"
-//    }
-//
-//    return Vector("")
-//  }
 
 }
 

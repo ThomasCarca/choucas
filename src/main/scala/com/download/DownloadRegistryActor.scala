@@ -15,6 +15,6 @@ class DownloadRegistryActor extends Actor with ActorLogging {
 
   def receive: Receive = {
     case DownloadImages(box) =>
-      sender() ! DownloadService.fetchDownloadUrls(box)
+      sender() ! DownloadService.fetchImagesInfo(box)
   }
 }
