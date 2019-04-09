@@ -150,3 +150,45 @@ will return :
 ```
 
 
+### [5] The sentinel service
+
+The sentinel service will return a list of sentinel images information given 
+a bounding box that delimits the perimeter of the sentinel images.
+The information about the images contains the download url, the preview url, 
+the cloud percentage if available, and the date of the shot.
+
+**POST /sentinel/**  
+with body :  
+```
+{
+    "neCoordinate": {
+        "lat": 43.3210563659668,
+        "lon": -0.3057760000228882
+    },
+    "swCoordinate": {
+        "lat": 43.260074615478516,
+        "lon": -0.4187789857387543
+    }
+}
+```
+will return : 
+```
+200 OK
+
+[
+    {
+        "cloud": 3.850100040435791,
+        "date": "2016-12-04T07:22:52.000Z",
+        "download": "https://peps.cnes.fr/resto/collections/S2/9d7d3644-3b5d-5bb7-affe-825783fcdad3/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/12/04/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20161204T134222_R006_V20161204T072252_20161204T072252_quicklook.jpg"
+    },
+    {
+        "cloud": 14.562800407409668,
+        "date": "2016-12-04T07:22:52.000Z",
+        "download": "https://peps.cnes.fr/resto/collections/S2/fb58472d-7006-5b7e-a2a0-3a8b052f013b/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/12/04/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20161204T132939_R006_V20161204T072252_20161204T072252_quicklook.jpg"
+    }
+]
+```
+
+

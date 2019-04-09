@@ -11,7 +11,7 @@ import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
-import com.download.DownloadRouter
+import com.sentinel.SentinelRouter
 import com.save.SaveRouter
 
 trait RootRoutes {
@@ -22,7 +22,7 @@ trait RootRoutes {
   def hikeRegistryActor: ActorRef
   def pinpointRegistryActor: ActorRef
   def boxRegistryActor: ActorRef
-  def downloadRegistryActor: ActorRef
+  def sentinelRegistryActor: ActorRef
   def tileRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
 
@@ -41,8 +41,8 @@ trait RootRoutes {
       pathPrefix("box") {
         new BoxRouter(boxRegistryActor).route
       } ~
-      pathPrefix("download") {
-        new DownloadRouter(downloadRegistryActor).route
+      pathPrefix("sentinel") {
+        new SentinelRouter(sentinelRegistryActor).route
       } ~
       pathPrefix("tile") {
         new TileRouter(tileRegistryActor).route
