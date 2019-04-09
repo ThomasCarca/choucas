@@ -3,7 +3,7 @@ package com.sentinel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import com.box.BoundingBox
+import com.shared.{BoundingBox, ImageInfo}
 import scalaj.http.Http
 import play.api.libs.json.{JsArray, JsDefined, JsNumber, Json, JsValue => PlayValue}
 

@@ -1,6 +1,7 @@
 package com.box
 
-import akka.actor.{ Actor, ActorLogging, Props }
+import akka.actor.{Actor, ActorLogging, Props}
+import com.shared.Coordinate
 
 object BoxRegistryActor {
   final case class ToBoundingBox(coordinates: Vector[Coordinate])

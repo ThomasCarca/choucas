@@ -1,7 +1,7 @@
 package com.sentinel
 
 import akka.actor.{Actor, ActorLogging, Props}
-import com.box.BoundingBox
+import com.shared.BoundingBox
 
 
 object SentinelRegistryActor {

@@ -1,5 +1,7 @@
 package com.box
 
+import com.shared.{BoundingBox, Coordinate}
+
 object BoxService {
 
   def createBoundingBox(coordinates: Vector[Coordinate]): BoundingBox = {

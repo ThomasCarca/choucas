@@ -4,9 +4,8 @@ import java.util.Date
 
 import spray.json.RootJsonFormat
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+import com.shared.ImageInfo
 import spray.json.DefaultJsonProtocol
-
-final case class ImageInfo(download: String, preview: String, cloud: Float, date: Date)
 
 trait SentinelJsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
