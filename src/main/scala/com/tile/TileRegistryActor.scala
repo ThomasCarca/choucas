@@ -12,6 +12,6 @@ class TileRegistryActor extends Actor with ActorLogging {
 
   def receive: Receive = {
     case TileImage(imageName) =>
-      sender() ! TileService.TileImage(imageName)
+      TileService.TileImage(imageName)
   }
 }

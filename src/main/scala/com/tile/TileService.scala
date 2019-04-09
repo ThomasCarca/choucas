@@ -12,7 +12,8 @@ object TileService extends DefaultJsonProtocol {
     file match {
       case "" => "Image doesn't exists"
       case _ => {
-        val doGdalPython = Process("gdal2tiles.py ".concat(file + " " + imageName))
+        val commands = "gdal2tiles.py res/" + file + " res/" + imageName
+        val doGdalPython = Process(commands).!!
         "Image tiled in /res/".concat(imageName)}
     }
 
