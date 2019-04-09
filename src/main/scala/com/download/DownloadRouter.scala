@@ -7,24 +7,23 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
-import com.box.BoundingBox
-import com.box.BoxJsonSupport
+import com.box.{BoundingBox, BoxJsonSupport}
 import com.download.DownloadRegistryActor.DownloadImages
-import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class DownloadRouter(downloadRegistryActor: ActorRef) extends BoxJsonSupport {
+class DownloadRouter(downloadRegistryActor: ActorRef) extends DownloadJsonSupport with BoxJsonSupport {
 
-  import DefaultJsonProtocol._
+  import spray.json.DefaultJsonProtocol._
 
   implicit lazy val timeout: Timeout = Timeout(5.seconds)
 
   lazy val route: Route = pathEndOrSingleSlash {
+
     post {
       entity(as[BoundingBox]) { boundingBox =>
-        val urls: Future[Vector[String]] = (downloadRegistryActor ? DownloadImages(boundingBox)).mapTo[Vector[String]]
+        val urls: Future[Vector[ImageInfo]] = (downloadRegistryActor ? DownloadImages(boundingBox)).mapTo[Vector[ImageInfo]]
         complete(StatusCodes.OK, urls)
       }
     }
