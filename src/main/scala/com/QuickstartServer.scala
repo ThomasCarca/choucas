@@ -11,7 +11,11 @@ import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
+<<<<<<< HEAD
 import com.download.DownloadRegistryActor
+=======
+import com.save.SaveRegistryActor
+>>>>>>> ad9fd5dbac4a8c3294f5ec472c9adcb5daf5e294
 import com.tile.TileRegistryActor
 
 object QuickstartServer extends App with RootRoutes {
@@ -26,6 +30,7 @@ object QuickstartServer extends App with RootRoutes {
   val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
   val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props, "downloadRegistryActor")
   val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
+  val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
 
   lazy val routes: Route = rootRoutes
 
