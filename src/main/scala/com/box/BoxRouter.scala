@@ -21,7 +21,7 @@ class BoxRouter(boxRegistryActor: ActorRef) extends BoxJsonSupport {
   lazy val route: Route = pathEndOrSingleSlash {
     post {
       entity(as[Vector[Coordinate]]) { coordinates =>
-        val box: Future[String] = (boxRegistryActor ? ToBoundingBox(coordinates)).mapTo[String]
+        val box: Future[BoundingBox] = (boxRegistryActor ? ToBoundingBox(coordinates)).mapTo[BoundingBox]
         complete(box)
       }
     }
