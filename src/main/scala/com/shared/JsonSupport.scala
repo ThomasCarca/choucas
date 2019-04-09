@@ -8,7 +8,7 @@ trait JsonSupport extends SprayJsonSupport {
   import com.shared.utils.DateMarshalling._
 
   implicit val urisJsonFormat: RootJsonFormat[URIs] = jsonFormat1(URIs)
-  implicit val coordinateJsonFormat: RootJsonFormat[Coordinate] = jsonFormat2(Coordinate)
+  implicit val coordinateJsonFormat: RootJsonFormat[Coordinates] = jsonFormat2(Coordinates)
   implicit val boundingBoxJsonFormat: RootJsonFormat[BoundingBox] = jsonFormat2(BoundingBox)
   implicit val imageInfoJsonFormat: RootJsonFormat[ImageInfo] = jsonFormat4(ImageInfo)
 }
