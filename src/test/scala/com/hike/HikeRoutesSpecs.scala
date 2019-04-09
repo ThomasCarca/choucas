@@ -21,6 +21,8 @@ class HikeRoutesSpecs extends WordSpec with Matchers with ScalaFutures with Scal
 
   override val boxRegistryActor: ActorRef = null
 
+  override val downloadRegistryActor: ActorRef = null
+
   override val tileRegistryActor: ActorRef = null
 
   lazy val routes: Route = rootRoutes

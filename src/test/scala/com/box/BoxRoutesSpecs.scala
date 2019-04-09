@@ -21,6 +21,8 @@ class BoxRoutesSpecs extends WordSpec with Matchers with ScalaFutures with Scala
 
   override val annotateRegistryActor: ActorRef = null
 
+  override val downloadRegistryActor: ActorRef = null
+
   override val tileRegistryActor: ActorRef = null
 
   lazy val routes: Route = rootRoutes
