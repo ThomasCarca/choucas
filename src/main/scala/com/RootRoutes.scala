@@ -1,6 +1,6 @@
 package com
 
-import akka.actor.{ActorRef, ActorSystem}
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.util.Timeout
@@ -11,11 +11,8 @@ import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
-<<<<<<< HEAD
 import com.download.DownloadRouter
-=======
 import com.save.SaveRouter
->>>>>>> ad9fd5dbac4a8c3294f5ec472c9adcb5daf5e294
 
 trait RootRoutes {
 

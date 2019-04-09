@@ -11,9 +11,9 @@ object PinpointService {
 
     val msgJson = msg.parseJson.convertTo[UriList]
 
-    val rowdata = msgJson.items.map(uri => processData(uri.toString)).filterNot(uri => uri.equals(Coord("", "")))
+    val rowdata = msgJson.items.map(uri => processData(uri.toString)).filterNot(uri => uri.equals(Coord(Long.MaxValue, Long.MaxValue)))
 
-    val dataContainer = new Container("Coordonne", rowdata)
+    val dataContainer = new Container("coordonne", rowdata)
     val jsonReturn = Json.toJson(dataContainer)
     return jsonReturn.toString()
 
@@ -40,11 +40,11 @@ object PinpointService {
         val value = uriResources.map(coord => coord.\\("value")).flatten
         if (value.nonEmpty) {
           val coord = value.head.toString().split(" ")
-          Coord(coord.head.replace(""""""", ""), coord.last.replace(""""""", ""))
+          Coord(coord.head.replace(""""""", "").toFloat, coord.last.replace(""""""", "").toFloat)
         } else {
-          Coord("", "")
+          Coord(Long.MaxValue, Long.MaxValue)
         }
-      case _ => Coord("", "")
+      case _ => Coord(Long.MaxValue, Long.MaxValue)
     }
   }
 

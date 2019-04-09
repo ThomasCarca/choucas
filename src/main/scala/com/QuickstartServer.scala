@@ -1,9 +1,9 @@
 package com
 
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
-import akka.actor.{ActorRef, ActorSystem}
+import scala.util.{ Failure, Success }
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
@@ -11,11 +11,8 @@ import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
-<<<<<<< HEAD
 import com.download.DownloadRegistryActor
-=======
 import com.save.SaveRegistryActor
->>>>>>> ad9fd5dbac4a8c3294f5ec472c9adcb5daf5e294
 import com.tile.TileRegistryActor
 
 object QuickstartServer extends App with RootRoutes {

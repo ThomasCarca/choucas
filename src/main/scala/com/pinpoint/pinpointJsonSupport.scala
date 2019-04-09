@@ -4,17 +4,17 @@ import play.api.libs.json.{ JsPath, Writes }
 import spray.json.{ DefaultJsonProtocol, DeserializationException, JsValue, RootJsonFormat }
 import play.api.libs.functional.syntax._
 
-final case class Coord(lat: String, lon: String)
+final case class Coord(lat: Float, lon: Float)
 
 case class Container(uri: String, content: Seq[Coord])
 
 object Container {
   implicit val CoordWrites: Writes[Coord] = (
-    (JsPath \ "lat").write[String] and
-    (JsPath \ "lon").write[String])(unlift(Coord.unapply))
+    (JsPath \ "lat").write[Float] and
+    (JsPath \ "lon").write[Float])(unlift(Coord.unapply))
   implicit val ContainerWrites: Writes[Container] = (
     (JsPath \ "type").write[String] and
-    (JsPath \ "coords").write[Seq[Coord]])(unlift(Container.unapply))
+    (JsPath \ "coord").write[Seq[Coord]])(unlift(Container.unapply))
 }
 
 case class UriList(items: Vector[String])
