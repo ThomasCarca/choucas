@@ -8,7 +8,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
-import com.pinpoint.PinpointRegistryActor.getPinpointFromUris
+import com.pinpoint.PinpointRegistryActor.ToCoordinates
 import com.shared.{Coordinates, JsonSupport, URIs}
 import spray.json.DefaultJsonProtocol
 
@@ -24,7 +24,7 @@ class PinpointRouter(PinpointRegistryActor: ActorRef) extends JsonSupport{
     pathEndOrSingleSlash {
       post {
         entity(as[URIs]) { uris =>
-          val coordinates: Future[Vector[Coordinates]] = (PinpointRegistryActor ? getPinpointFromUris(uris)).mapTo[Vector[Coordinates]]
+          val coordinates: Future[Vector[Coordinates]] = (PinpointRegistryActor ? ToCoordinates(uris)).mapTo[Vector[Coordinates]]
           complete(coordinates)
         }
       }
