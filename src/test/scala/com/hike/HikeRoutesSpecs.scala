@@ -6,12 +6,12 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.RootRoutes
-import com.annotate.AnnotateJsonSupport
+import com.shared.JsonSupport
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.concurrent.ScalaFutures
 
 class HikeRoutesSpecs extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest with SprayJsonSupport
-  with RootRoutes with AnnotateJsonSupport{
+  with RootRoutes with JsonSupport{
   override val annotateRegistryActor: ActorRef = null
 
   override val hikeRegistryActor: ActorRef =
