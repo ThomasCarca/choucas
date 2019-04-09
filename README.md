@@ -136,11 +136,11 @@ will return :
 200 OK
 
 {
-    "neCoordinate": {
+    "neCoordinates": {
         "lat": 43.3210563659668,
         "lon": -0.3057760000228882
     },
-    "swCoordinate": {
+    "swCoordinates": {
         "lat": 43.260074615478516,
         "lon": -0.4187789857387543
     }
@@ -159,11 +159,11 @@ the cloud percentage if available, and the date of the shot.
 with body :  
 ```
 {
-    "neCoordinate": {
+    "neCoordinates": {
         "lat": 43.3210563659668,
         "lon": -0.3057760000228882
     },
-    "swCoordinate": {
+    "swCoordinates": {
         "lat": 43.260074615478516,
         "lon": -0.4187789857387543
     }
