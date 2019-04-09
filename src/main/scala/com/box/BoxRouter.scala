@@ -7,6 +7,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.box.BoxRegistryActor.ToBoundingBox
+import com.shared.{BoundingBox, Coordinate}
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future

@@ -1,5 +1,6 @@
 package com.annotate
 
+import com.shared.URIs
 import scalaj.http.{Http, HttpResponse}
 import spray.json._
 

@@ -9,6 +9,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.annotate.AnnotateRegistryActor.Annotate
+import com.shared.URIs
 
 import scala.concurrent.Future
 
