@@ -11,6 +11,7 @@ import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
+import com.save.SaveRouter
 
 trait RootRoutes {
 
@@ -21,6 +22,7 @@ trait RootRoutes {
   def pinpointRegistryActor: ActorRef
   def boxRegistryActor: ActorRef
   def tileRegistryActor: ActorRef
+  def saveRegistryActor: ActorRef
 
   implicit lazy val timeout = Timeout(180.seconds)
 
@@ -39,6 +41,9 @@ trait RootRoutes {
       } ~
       pathPrefix("tile") {
         new TileRouter(tileRegistryActor).route
+      } ~
+      pathPrefix("save") {
+        new SaveRouter(saveRegistryActor).route
       } ~
       pathEndOrSingleSlash {
         get {
