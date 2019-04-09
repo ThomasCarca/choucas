@@ -1,51 +1,50 @@
 package com.pinpoint
 
-import spray.json.{ JsArray, JsObject, JsValue }
-import akka.actor.{ Actor, ActorLogging, PoisonPill, Props }
-import com.annotate.URIs
-import scalaj.http.{ Http, HttpResponse }
 import spray.json._
+import akka.actor.{ Actor, ActorLogging, PoisonPill, Props }
+import play.api.libs.json.{ JsValue => PlayValue, Json }
+import scalaj.http.{ Http, HttpResponse }
 
 object PinpointService {
 
-  def processJsonData(msg: String): Coord = {
+  def processJsonData(msg: String): String = {
 
-    val mapOfUri = msg.asInstanceOf[URIs]
+    val msgJson = msg.parseJson.convertTo[UriList]
 
-    val coords = mapOfUri.uris.map(uri => processData(uri.toString))
+    val rowdata = msgJson.items.map(uri => processData(uri.toString)).filterNot(uri => uri.equals(Coord("", "")))
 
-    return coords.asInstanceOf[Coord]
+    val dataContainer = new Container("Coordonne", rowdata)
+    val jsonReturn = Json.toJson(dataContainer)
+    return jsonReturn.toString()
 
   }
 
   def processData(uri: String): Coord = {
     val httpString: String = buildHttpString(uri)
     val response: HttpResponse[String] = sendRequest(httpString)
-    val body: JsObject = response.body.parseJson.asJsObject
-    val uriResources: Option[JsValue] = body.fields.get("Resources")
-    return buildCoords(uriResources)
+    val body = Json.parse(response.body)
+    val arraybuff = body.\\("bindings")
+    return buildCoords(arraybuff)
   }
 
   def buildHttpString(msg: String): String = {
     val placeToReaserch = msg.split("/").last
-    val query = "select+%3Fcoor+where+{dbpedia-fr%3A" + placeToReaserch + "+georss%3Apoint+%3Fcoor}&format=application%2Fsparql-results%2Bjson"
-    val url = "https://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=" + query
+    val query = "select+%3Fcoor+where+%7Bdbpedia-fr%3A" + placeToReaserch + "+georss%3Apoint+%3Fcoor%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
+    val url = "http://fr.dbpedia.org/sparql?default-graph-uri=&query=" + query
     return url
   }
 
-  def buildCoords(uriResources: Option[JsValue]): Coord = {
+  def buildCoords(uriResources: Seq[PlayValue]): Coord = {
     uriResources match {
-      case Some(resources) => {
-        resources match {
-          case JsArray(elements) => {
-            val coordJSon = elements.map(e => e.asJsObject.fields.get("@value")).flatten
-            val coord = coordJSon.map(text => text.toString())
-            return Coord(coord.distinct)
-          }
-          case _ => Coord(Vector.empty[String])
+      case List(element) =>
+        val value = uriResources.map(coord => coord.\\("value")).flatten
+        if (value.nonEmpty) {
+          val coord = value.head.toString().split(" ")
+          Coord(coord.head.replace(""""""", ""), coord.last.replace(""""""", ""))
+        } else {
+          Coord("", "")
         }
-      }
-      case None => Coord(Vector.empty[String])
+      case _ => Coord("", "")
     }
   }
 
