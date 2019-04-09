@@ -1,14 +1,14 @@
-package com.download
+package com.sentinel
 
 import java.text.SimpleDateFormat
 import java.util.Date
 
 import com.box.BoundingBox
 import scalaj.http.Http
-import play.api.libs.json.{JsArray, JsBoolean, JsDefined, JsNull, JsNumber, JsObject, JsString, Json, JsValue => PlayValue}
+import play.api.libs.json.{JsArray, JsDefined, JsNull, JsNumber, Json, JsValue => PlayValue}
 
 
-object DownloadService {
+object SentinelService {
 
   private val formatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
@@ -23,8 +23,8 @@ object DownloadService {
           val download: String = (properties \ "services" \ "download" \ "url").get.as[String]
           val preview: String = (properties \ "quicklook").get.as[String]
           val cloud: Float = (properties \ "cloudCover").get match {
-            case JsNull => Float.NaN
             case JsNumber(value) => value.toFloat
+            case _ => Float.NaN
           }
           val date: Date = formatter.parse((properties \ "startDate").get.as[String])
           ImageInfo(download, preview, cloud, date)

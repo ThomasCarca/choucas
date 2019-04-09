@@ -11,7 +11,7 @@ import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
-import com.download.DownloadRegistryActor
+import com.sentinel.SentinelRegistryActor
 import com.save.SaveRegistryActor
 import com.tile.TileRegistryActor
 
@@ -25,7 +25,7 @@ object QuickstartServer extends App with RootRoutes {
   val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props, "hikeRegistryActor")
   val pinpointRegistryActor: ActorRef = system.actorOf(PinpointRegistryActor.props, "pinpointRegistryActor")
   val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
-  val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props, "downloadRegistryActor")
+  val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props, "sentinelRegistryActor")
   val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
   val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
 

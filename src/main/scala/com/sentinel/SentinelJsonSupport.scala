@@ -1,4 +1,4 @@
-package com.download
+package com.sentinel
 
 import java.util.Date
 
@@ -8,7 +8,7 @@ import spray.json.DefaultJsonProtocol
 
 final case class ImageInfo(download: String, preview: String, cloud: Float, date: Date)
 
-trait DownloadJsonSupport extends SprayJsonSupport {
+trait SentinelJsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
   import com.shared.utils.DateMarshalling._
 

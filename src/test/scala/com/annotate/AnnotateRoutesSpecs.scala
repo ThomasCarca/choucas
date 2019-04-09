@@ -23,7 +23,7 @@ class AnnotateRoutesSpecs extends WordSpec with Matchers with ScalaFutures with 
 
   override val boxRegistryActor: ActorRef = null
 
-  override val downloadRegistryActor: ActorRef = null
+  override val sentinelRegistryActor: ActorRef = null
 
   override val tileRegistryActor: ActorRef = null
 
