@@ -8,14 +8,16 @@
 
 In this section will be described the different services and endpoints.
 
-### 1 The hike service
+### [1] The hike service
 The hike service will have 2 functions. The first one will return the list of ids of hikes and the second one 
-will return a description of a selected hike.
+will return the description for a selected hike.
 
 **GET /hike/**
 
 will return :
 ```
+200 OK
+
 ["502272", "72314", "938425",...]
 ```
 
@@ -23,12 +25,14 @@ will return :
 
 will return
 ```
+200 OK
+
 "Cette pointe est une valeur sure pour une rando-vol dans cette belle vallée de Sixt. Un des rares sommet 
 décollable en parapente à cause de la réserve naturelle.\nAttéro dans les grands champs fauchés vers 
 l’école de Sixt.\nItinéraire du topo depuis Le Crot.\nBon sentier, sec."
 ```
 
-### The annotate service
+### [2] The annotate service
 
 The annotate service will return a list of URI for each word it finds on dbpedia 
 in a given text, using semantics.
@@ -53,7 +57,7 @@ will return :
 }
 ```
 
-### The box service
+### [4] The box service
 
 The box service will return a bounding box containing all points given in a list.
 The bounding box is represented by two points (one at south west and one at north east) 
