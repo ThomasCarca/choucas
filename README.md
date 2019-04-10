@@ -60,7 +60,7 @@ will return :
     ]
 }
 ```
-### [3] Pinpoint Service
+### [3] The pinpoint Service
 
 Pinpoint service will return a list of latitude and longitude. Each couple of latitude and longitude will be given by a list
 of Uri from fr.dbpedia. If uri don't reference a place or if the place don't have latitude and longitude set. It will
