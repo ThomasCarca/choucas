@@ -13,7 +13,7 @@ import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
 import com.sentinel.SentinelRegistryActor
 import com.save.SaveRegistryActor
-import com.tile.TileRegistryActor
+import com.tile.{TileRegistryActor, DownloadRegistryActor}
 
 object Server extends App with RootRoutes {
 
@@ -27,6 +27,7 @@ object Server extends App with RootRoutes {
   val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
   val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props, "sentinelRegistryActor")
   val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
+  val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props, "downloadRegistryActor")
   val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
 
   lazy val routes: Route = rootRoutes
