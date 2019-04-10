@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 
 class SaveRouter(saveRegistryActor: ActorRef) {
-  implicit lazy val timeout: Timeout = Timeout(180.seconds)
+  implicit lazy val timeout: Timeout = Timeout(600.seconds)
 
   lazy val route: Route = get {
     path(Segment) { imageName =>

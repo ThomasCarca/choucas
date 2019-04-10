@@ -25,10 +25,11 @@ trait RootRoutes {
   def boxRegistryActor: ActorRef
   def sentinelRegistryActor: ActorRef
   def tileRegistryActor: ActorRef
+  def downloadRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
   def elasticSearchActor: ActorRef
 
-  implicit lazy val timeout = Timeout(180.seconds)
+  implicit lazy val timeout = Timeout(600.seconds)
 
   lazy val rootRoutes: Route =
     pathPrefix("annotate") {
@@ -47,7 +48,7 @@ trait RootRoutes {
         new SentinelRouter(sentinelRegistryActor).route
       } ~
       pathPrefix("tile") {
-        new TileRouter(tileRegistryActor).route
+        new TileRouter(downloadRegistryActor, tileRegistryActor).route
       } ~
       pathPrefix("save") {
         new SaveRouter(saveRegistryActor).route

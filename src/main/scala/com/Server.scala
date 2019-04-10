@@ -14,9 +14,9 @@ import com.box.BoxRegistryActor
 import com.elasticSearch.ElasticSearchActor
 import com.sentinel.SentinelRegistryActor
 import com.save.SaveRegistryActor
-import com.tile.TileRegistryActor
+import com.tile.{TileRegistryActor, DownloadRegistryActor}
 
-object QuickstartServer extends App with RootRoutes {
+object Server extends App with RootRoutes {
 
   implicit val system: ActorSystem = ActorSystem("choucas-server")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
@@ -28,6 +28,7 @@ object QuickstartServer extends App with RootRoutes {
   val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
   val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props, "sentinelRegistryActor")
   val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
+  val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props, "downloadRegistryActor")
   val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
   val elasticSearchActor: ActorRef = system.actorOf(ElasticSearchActor.props, "elasticSearchActor")
 
