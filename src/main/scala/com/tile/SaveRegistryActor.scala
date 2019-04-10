@@ -1,6 +1,7 @@
-package com.save
+package com.tile
 
 import akka.actor.{Actor, ActorLogging, Props}
+import SaveService
 
 object SaveRegistryActor {
   final case class SaveImageWithHdfs(imageName: String)
