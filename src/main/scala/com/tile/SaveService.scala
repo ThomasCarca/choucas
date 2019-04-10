@@ -1,15 +1,25 @@
 package com.tile
 
-import spray.json.DefaultJsonProtocol
+
+import com.shared.{Job, JobQueue}
 
 import scala.sys.process.Process
+import scala.util.Try
 
-object SaveService extends DefaultJsonProtocol{
-  def SaveImageWithHdfs(imageName: String): String = {
-    val commands = "scp res/" + imageName + ".zip Poppy@10.100.2.2:/home/Poppy"
-    val firstCopy = Process(commands).!!
-    val secondCommand = "ssh Poppy@10.100.2.2 hadoop fs -put /home/Poppy/" + imageName + ".zip /user/poppy"
-    val secondCopy = Process(secondCommand).!!
-    "files uploaded"
+object SaveService {
+//  def saveImageWithHdfs(queue: JobQueue): Unit = {
+//    queue.jobs
+//  }
+
+  def saveImageWithHdfs(job: Job): Try[Any] = {
+    val commands = s"scp res/${job.uuid}.zip Poppy@10.100.2.2:/home/Poppy"
+    val secondCommand = s"ssh Poppy@10.100.2.2 hadoop fs -put /home/Poppy/${job.uuid}.zip /user/poppy"
+
+    Try({
+      val firstCopy = Process(commands).!!
+
+      val secondCopy = Process(secondCommand).!!
+    })
+
   }
 }

@@ -15,6 +15,7 @@ object DownloadService {
       queue.start(job.uuid)
       downloadImage(job) match {
         case Success(_) => {
+          TileService.tileImage(job)
           queue.complete(job.uuid)
         }
         case Failure(_) => {
