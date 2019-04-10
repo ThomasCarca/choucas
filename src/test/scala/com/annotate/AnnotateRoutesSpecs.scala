@@ -6,7 +6,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.server.Route
 import com.RootRoutes
-import com.shared.{JsonSupport, URIs}
+import com.shared.{JobQueue, JsonSupport, URIs}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json.JsObject
@@ -31,6 +31,8 @@ class AnnotateRoutesSpecs extends WordSpec with Matchers with ScalaFutures with 
   override val downloadRegistryActor: ActorRef = null
 
   override val saveRegistryActor: ActorRef = null
+
+  override val queueRegistryActor: ActorRef = null
 
   lazy val routes: Route = rootRoutes
 

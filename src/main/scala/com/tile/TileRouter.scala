@@ -6,12 +6,17 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
-import com.shared.JsonSupport
+import akka.http.scaladsl.server.directives.FutureDirectives.onComplete
+import akka.pattern.ask
+import com.shared.{JobQueue, JobQueueLocation, JobQueues, JsonSupport}
 import com.tile.DownloadRegistryActor.DownloadImages
 import com.tile.TileRegistryActor.TileImage
 import spray.json.DefaultJsonProtocol
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 
 class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) extends JsonSupport {
 
@@ -29,8 +34,14 @@ class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) e
   } ~
   post {
     entity(as[Vector[String]]) { urls =>
-      downloadRegistryActor ! DownloadImages(urls)
-      complete(StatusCodes.Accepted)
+      val futureQueue: Future[JobQueue] = (downloadRegistryActor ? DownloadImages(urls)).mapTo[JobQueue]
+      onComplete(futureQueue) {
+        case Failure(_) => complete(StatusCodes.ServiceUnavailable)
+        case Success(queue) => {
+          JobQueues.queues = JobQueues.queues + (queue.uuid -> queue)
+          complete(StatusCodes.Accepted, new JobQueueLocation(s"queue/${queue.uuid}"))
+        }
+      }
     }
   }
 }

@@ -193,4 +193,87 @@ will return :
 ]
 ```
 
+### [6] The tile service
 
+The tile service will take a list of download urls 
+(that can be fetched from the sentinel service for instance) 
+and will tile each downloaded image. The tiles will then be uploaded to a HDFS.
+
+**POST /tile/**  
+with body :  
+```
+[
+    "https://peps.cnes.fr/resto/collections/S2/39b4d215-e74f-533f-8781-9bf599438c8a/download",
+    "https://peps.cnes.fr/resto/collections/S2/d4478720-77e5-58ad-81be-72cf38339e55/download",
+    "https://peps.cnes.fr/resto/collections/S2/83156d1b-5618-505e-a039-80efee85eb49/download"
+]
+```
+will return : 
+```
+202 Accepted
+
+{
+    "location": "queue/c42c19fd-eb19-4371-b57f-8edf53a40bba"
+}
+```
+
+Since this service is comprised of long running jobs, the server will automaticaly send back
+a 202 Accepted response to the client with a location body.
+
+You can then use the location to get information on the running jobs : 
+
+**GET /queue/:id**  
+will return : 
+```
+200 OK
+
+{
+    "jobs": [
+        {
+            "status": "STARTED",
+            "url": "https://peps.cnes.fr/resto/collections/S2/39b4d215-e74f-533f-8781-9bf599438c8a/download",
+            "uuid": "39b4d215-e74f-533f-8781-9bf599438c8a"
+        },
+        {
+            "status": "PENDING",
+            "url": "https://peps.cnes.fr/resto/collections/S2/d4478720-77e5-58ad-81be-72cf38339e55/download",
+            "uuid": "d4478720-77e5-58ad-81be-72cf38339e55"
+        },
+        {
+            "status": "PENDING",
+            "url": "https://peps.cnes.fr/resto/collections/S2/83156d1b-5618-505e-a039-80efee85eb49/download",
+            "uuid": "83156d1b-5618-505e-a039-80efee85eb49"
+        }
+    ],
+    "progress": "0/3",
+    "uuid": "c42c19fd-eb19-4371-b57f-8edf53a40bba"
+}
+```
+
+After a while, you'll be able to know when all jobs have been completed :
+
+```
+200 OK
+
+{
+    "jobs": [
+        {
+            "status": "COMPLETE",
+            "url": "https://peps.cnes.fr/resto/collections/S2/39b4d215-e74f-533f-8781-9bf599438c8a/download",
+            "uuid": "39b4d215-e74f-533f-8781-9bf599438c8a"
+        },
+        {
+            "status": "COMPLETE",
+            "url": "https://peps.cnes.fr/resto/collections/S2/d4478720-77e5-58ad-81be-72cf38339e55/download",
+            "uuid": "d4478720-77e5-58ad-81be-72cf38339e55"
+        },
+        {
+            "status": "COMPLETE",
+            "url": "https://peps.cnes.fr/resto/collections/S2/83156d1b-5618-505e-a039-80efee85eb49/download",
+            "uuid": "83156d1b-5618-505e-a039-80efee85eb49"
+        }
+    ],
+    "progress": "3/3",
+    "uuid": "c42c19fd-eb19-4371-b57f-8edf53a40bba"
+}
+```

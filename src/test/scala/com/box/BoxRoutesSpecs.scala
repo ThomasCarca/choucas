@@ -6,7 +6,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.RootRoutes
-import com.shared.{BoundingBox, JsonSupport}
+import com.shared.{BoundingBox, JobQueue, JsonSupport}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 
@@ -29,6 +29,9 @@ class BoxRoutesSpecs extends WordSpec with Matchers with ScalaFutures with Scala
   override val downloadRegistryActor: ActorRef = null
 
   override val saveRegistryActor: ActorRef = null
+
+  override val queueRegistryActor: ActorRef = null
+
 
   lazy val routes: Route = rootRoutes
 

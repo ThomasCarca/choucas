@@ -11,4 +11,7 @@ trait JsonSupport extends SprayJsonSupport {
   implicit val coordinateJsonFormat: RootJsonFormat[Coordinates] = jsonFormat2(Coordinates)
   implicit val boundingBoxJsonFormat: RootJsonFormat[BoundingBox] = jsonFormat2(BoundingBox)
   implicit val imageInfoJsonFormat: RootJsonFormat[ImageInfo] = jsonFormat4(ImageInfo)
+  implicit val jobJsonFormat: RootJsonFormat[Job] = jsonFormat3(Job)
+  implicit val staticJobQueueJsonFormat: RootJsonFormat[StaticJobQueue] = jsonFormat3(StaticJobQueue)
+  implicit val jobQueueLocationJsonFormat: RootJsonFormat[JobQueueLocation] = jsonFormat1(JobQueueLocation)
 }

@@ -1,6 +1,6 @@
 package com
 
-import akka.actor.{ ActorRef, ActorSystem }
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.util.Timeout
@@ -11,8 +11,10 @@ import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
+import com.queue.QueueRouter
 import com.sentinel.SentinelRouter
 import com.save.SaveRouter
+import com.shared.JobQueue
 
 trait RootRoutes {
 
@@ -25,6 +27,7 @@ trait RootRoutes {
   def sentinelRegistryActor: ActorRef
   def tileRegistryActor: ActorRef
   def downloadRegistryActor: ActorRef
+  def queueRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
 
   implicit lazy val timeout = Timeout(180.seconds)
@@ -47,6 +50,9 @@ trait RootRoutes {
       } ~
       pathPrefix("tile") {
         new TileRouter(downloadRegistryActor, tileRegistryActor).route
+      } ~
+      pathPrefix("queue") {
+        new QueueRouter(queueRegistryActor).route
       } ~
       pathPrefix("save") {
         new SaveRouter(saveRegistryActor).route
