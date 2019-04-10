@@ -26,7 +26,7 @@ trait RootRoutes {
   def tileRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
 
-  implicit lazy val timeout = Timeout(180.seconds)
+  implicit lazy val timeout = Timeout(600.seconds)
 
   lazy val rootRoutes: Route =
     pathPrefix("annotate") {
