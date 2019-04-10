@@ -30,6 +30,8 @@ class BoxRoutesSpecs extends WordSpec with Matchers with ScalaFutures with Scala
 
   override val saveRegistryActor: ActorRef = null
 
+  override val elasticSearchActor: ActorRef = null
+
   lazy val routes: Route = rootRoutes
 
   "POST /box" should {

@@ -32,6 +32,8 @@ class AnnotateRoutesSpecs extends WordSpec with Matchers with ScalaFutures with 
 
   override val saveRegistryActor: ActorRef = null
 
+  override val elasticSearchActor: ActorRef = null
+
   lazy val routes: Route = rootRoutes
 
   "POST /annotate" should {
