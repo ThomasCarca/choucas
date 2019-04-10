@@ -16,7 +16,7 @@ final case class BoundingBox(swCoordinates: Coordinates, neCoordinates: Coordina
 }
 
 
-final case class Job(uuid: String, url: String, status: String)
+final case class Job(uuid: String, url: String, status: String = "PENDING")
 
 final case class StaticJobQueue(uuid: String, progress: String, jobs: Vector[Job])
 
