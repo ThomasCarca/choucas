@@ -1,7 +1,7 @@
 package com.shared
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import spray.json.{DefaultJsonProtocol, RootJsonFormat}
+import spray.json.{ DefaultJsonProtocol, RootJsonFormat }
 
 trait JsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
@@ -11,4 +11,8 @@ trait JsonSupport extends SprayJsonSupport {
   implicit val coordinateJsonFormat: RootJsonFormat[Coordinates] = jsonFormat2(Coordinates)
   implicit val boundingBoxJsonFormat: RootJsonFormat[BoundingBox] = jsonFormat2(BoundingBox)
   implicit val imageInfoJsonFormat: RootJsonFormat[ImageInfo] = jsonFormat4(ImageInfo)
+  implicit val metaDataJsonFormat: RootJsonFormat[MetaData] = jsonFormat1(MetaData)
+  implicit val tuileJsonFormat: RootJsonFormat[Tuile] = jsonFormat3(Tuile)
+  implicit val elasticSearchJsonFormat: RootJsonFormat[DataElastic] = jsonFormat4(DataElastic)
+
 }

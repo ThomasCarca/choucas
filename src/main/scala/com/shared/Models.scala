@@ -10,3 +10,6 @@ final case class BoundingBox(swCoordinates: Coordinates, neCoordinates: Coordina
     s"${swCoordinates.lat},${swCoordinates.lon},${neCoordinates.lat},${neCoordinates.lon}"
   }
 }
+case class MetaData(data: Vector[String])
+final case class Tuile(download: String, name: String, metaData: MetaData)
+final case class DataElastic(box: BoundingBox, tuiles: Vector[Tuile], image: ImageInfo, metaData: MetaData)

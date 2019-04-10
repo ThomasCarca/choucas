@@ -11,6 +11,7 @@ import com.hike.HikeRouter
 import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
+import com.elasticSearch.{ ElasticSearchActor, ElasticSearchRoute }
 import com.sentinel.SentinelRouter
 import com.save.SaveRouter
 
@@ -25,6 +26,7 @@ trait RootRoutes {
   def sentinelRegistryActor: ActorRef
   def tileRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
+  def elasticSearchActor: ActorRef
 
   implicit lazy val timeout = Timeout(180.seconds)
 
@@ -49,6 +51,9 @@ trait RootRoutes {
       } ~
       pathPrefix("save") {
         new SaveRouter(saveRegistryActor).route
+      } ~
+      pathPrefix("elastic") {
+        new ElasticSearchRoute(elasticSearchActor).route
       } ~
       pathEndOrSingleSlash {
         get {

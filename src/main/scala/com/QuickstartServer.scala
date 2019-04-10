@@ -11,6 +11,7 @@ import com.annotate.AnnotateRegistryActor
 import com.hike.HikeRegistryActor
 import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
+import com.elasticSearch.ElasticSearchActor
 import com.sentinel.SentinelRegistryActor
 import com.save.SaveRegistryActor
 import com.tile.TileRegistryActor
@@ -28,6 +29,7 @@ object QuickstartServer extends App with RootRoutes {
   val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props, "sentinelRegistryActor")
   val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
   val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
+  val elasticSearchActor: ActorRef = system.actorOf(ElasticSearchActor.props, "elasticSearchActor")
 
   lazy val routes: Route = rootRoutes
 
