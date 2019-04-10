@@ -13,9 +13,8 @@ import com.pinpoint.PinpointRegistryActor
 import com.box.BoxRegistryActor
 import com.elasticSearch.ElasticSearchActor
 import com.sentinel.SentinelRegistryActor
-import com.save.SaveRegistryActor
 import com.queue.QueueRegistryActor
-import com.tile.{DownloadRegistryActor, TileRegistryActor}
+import com.tile.{DownloadRegistryActor, SaveRegistryActor, TileRegistryActor}
 
 object Server extends App with RootRoutes {
 
