@@ -15,7 +15,7 @@ class DownloadRegistryActor extends Actor with ActorLogging {
   import DownloadRegistryActor._
 
   def createJobQueue(urls: Vector[String]): JobQueue = {
-    val jobs = urls.map(url => new Job(createUUID(url), url, "PENDING"))
+    val jobs = urls.map(url => new Job(createUUID(url), url))
     val queue = new JobQueue
     queue.total = urls.length
     queue.jobs = jobs
