@@ -12,9 +12,9 @@ import com.pinpoint.PinpointRouter
 import com.tile.TileRouter
 import com.box.BoxRouter
 import com.queue.QueueRouter
+import com.elasticSearch.ElasticSearchRoute
 import com.sentinel.SentinelRouter
 import com.save.SaveRouter
-import com.shared.JobQueue
 
 trait RootRoutes {
 
@@ -29,8 +29,9 @@ trait RootRoutes {
   def downloadRegistryActor: ActorRef
   def queueRegistryActor: ActorRef
   def saveRegistryActor: ActorRef
+  def elasticSearchActor: ActorRef
 
-  implicit lazy val timeout = Timeout(180.seconds)
+  implicit lazy val timeout = Timeout(600.seconds)
 
   lazy val rootRoutes: Route =
     pathPrefix("annotate") {
@@ -56,6 +57,9 @@ trait RootRoutes {
       } ~
       pathPrefix("save") {
         new SaveRouter(saveRegistryActor).route
+      } ~
+      pathPrefix("elastic") {
+        new ElasticSearchRoute(elasticSearchActor).route
       } ~
       pathEndOrSingleSlash {
         get {

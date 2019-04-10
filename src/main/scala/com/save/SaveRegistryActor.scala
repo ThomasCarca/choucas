@@ -12,6 +12,6 @@ class SaveRegistryActor extends Actor with ActorLogging{
 
   def receive: Receive = {
     case SaveImageWithHdfs(imageName) =>
-      sender() ! SaveService.SaveImageWithHdfs(imageName)
+      SaveService.SaveImageWithHdfs(imageName)
   }
 }

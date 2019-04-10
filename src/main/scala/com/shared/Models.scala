@@ -50,3 +50,6 @@ final case class JobQueue() {
 }
 
 final case class JobQueueLocation(location: String)
+final case class MetaData(data: Vector[String])
+final case class Tuile(download: String, name: String, metaData: MetaData)
+final case class DataElastic(box: BoundingBox, tuiles: Vector[Tuile], image: ImageInfo, metaData: MetaData)
