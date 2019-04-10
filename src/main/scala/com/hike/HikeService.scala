@@ -1,16 +1,16 @@
 package com.hike
 
 import scalaj.http._
-import spray.json._
-import play.api.libs.json.{Json, JsValue => PlayValue}
+import play.api.libs.json.{JsArray, JsDefined, JsNumber, Json, JsValue => PlayValue}
+
 
 import scala.collection.mutable.ArrayBuffer
 
-object HikeService extends DefaultJsonProtocol {
+object HikeService {
 
-  def getAllHikes() : String = {
+  def getAllHikes() : Vector[String] = {
     val response = Http("https://choucas.blqn.fr/data/outing/").header("Accept", "application/json").asString
-    filterIdOrigin(response).toJson.prettyPrint
+    filterIdOrigin(response)
   }
 
   def GetHikeById(id: String) : String = {
@@ -18,11 +18,11 @@ object HikeService extends DefaultJsonProtocol {
     filterDescription(response).toString()
   }
 
-  def filterIdOrigin(response: HttpResponse[String]): Vector[JsValue] = {
-    val body = response.body.parseJson
+  def filterIdOrigin(response: HttpResponse[String]): Vector[String] = {
+    val body : PlayValue = Json.parse(response.body)
     body match {
-      case JsArray(elements) => elements.flatMap(e => e.asJsObject.fields.get("idOrigin"))
-      case _ => Vector.empty[JsValue]
+      case JsArray(hikes) => hikes.map(hike => (hike \ "idOrigin").get.as[String]).toVector
+      case _ => Vector.empty
     }
   }
 
