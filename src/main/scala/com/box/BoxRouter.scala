@@ -7,13 +7,13 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.box.BoxRegistryActor.ToBoundingBox
-import com.shared.{BoundingBox, Coordinate}
+import com.shared.{BoundingBox, Coordinates, JsonSupport}
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class BoxRouter(boxRegistryActor: ActorRef) extends BoxJsonSupport {
+class BoxRouter(boxRegistryActor: ActorRef) extends JsonSupport {
 
   import DefaultJsonProtocol._
 
@@ -21,7 +21,7 @@ class BoxRouter(boxRegistryActor: ActorRef) extends BoxJsonSupport {
 
   lazy val route: Route = pathEndOrSingleSlash {
     post {
-      entity(as[Vector[Coordinate]]) { coordinates =>
+      entity(as[Vector[Coordinates]]) { coordinates =>
         val box: Future[BoundingBox] = (boxRegistryActor ? ToBoundingBox(coordinates)).mapTo[BoundingBox]
         complete(box)
       }

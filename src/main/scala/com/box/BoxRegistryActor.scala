@@ -1,10 +1,10 @@
 package com.box
 
 import akka.actor.{Actor, ActorLogging, Props}
-import com.shared.Coordinate
+import com.shared.Coordinates
 
 object BoxRegistryActor {
-  final case class ToBoundingBox(coordinates: Vector[Coordinate])
+  final case class ToBoundingBox(coordinates: Vector[Coordinates])
   def props: Props = Props[BoxRegistryActor]
 }
 

@@ -6,12 +6,12 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.RootRoutes
-import com.shared.BoundingBox
+import com.shared.{BoundingBox, JsonSupport}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 
 class BoxRoutesSpecs extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest with SprayJsonSupport
-  with RootRoutes with BoxJsonSupport {
+  with RootRoutes with JsonSupport {
 
   override val boxRegistryActor: ActorRef =
     system.actorOf(BoxRegistryActor.props, "boxRegistry")

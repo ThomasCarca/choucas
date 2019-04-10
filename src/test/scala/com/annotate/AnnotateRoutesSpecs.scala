@@ -6,14 +6,14 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.server.Route
 import com.RootRoutes
-import com.shared.URIs
+import com.shared.{JsonSupport, URIs}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, WordSpec}
 import spray.json.JsObject
 import spray.json.DefaultJsonProtocol._
 
 class AnnotateRoutesSpecs extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest with SprayJsonSupport
-  with RootRoutes with AnnotateJsonSupport {
+  with RootRoutes with JsonSupport {
 
   override val annotateRegistryActor: ActorRef =
     system.actorOf(AnnotateRegistryActor.props, "annotateRegistry")

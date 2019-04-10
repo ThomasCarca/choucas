@@ -15,7 +15,7 @@ import com.sentinel.SentinelRegistryActor
 import com.save.SaveRegistryActor
 import com.tile.TileRegistryActor
 
-object QuickstartServer extends App with RootRoutes {
+object Server extends App with RootRoutes {
 
   implicit val system: ActorSystem = ActorSystem("choucas-server")
   implicit val materializer: ActorMaterializer = ActorMaterializer()

@@ -1,18 +1,19 @@
 package com.pinpoint
 
-import akka.actor.{ Actor, ActorLogging, PoisonPill, Props }
+import akka.actor.{Actor, ActorLogging, Props}
+import com.shared.URIs
 
 object PinpointRegistryActor {
-  case class getPinpointFromUri(msg: String)
+  final case class ToCoordinates(uris: URIs)
   def props: Props = Props[PinpointRegistryActor]
 }
 
 class PinpointRegistryActor extends Actor with ActorLogging {
-
   import PinpointRegistryActor._
 
-  def receive = {
-    case getPinpointFromUri(jsonData) => sender() ! PinpointService.processJsonData(jsonData)
+  def receive: Receive = {
+    case ToCoordinates(uris) =>
+      sender() ! PinpointService.fetchCoordinates(uris)
   }
 
 }
