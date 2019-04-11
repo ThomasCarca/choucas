@@ -38,7 +38,8 @@ object DownloadService {
         .header("Authorization", basicAuth)
         .asBytes
 
-      if (response.code < 200 || response.code > 299)
+      // If status is 202, cancel the operation as the resource is unavailable.
+      if (response.code < 200 || response.code > 299 || response.code == 202)
         throw new Exception
 
       val is = new FileOutputStream(path)
