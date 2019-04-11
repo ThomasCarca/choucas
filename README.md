@@ -230,7 +230,7 @@ will return :
 {
     "jobs": [
         {
-            "status": "STARTED",
+            "status": "DOWNLOADING",
             "url": "https://peps.cnes.fr/resto/collections/S2/39b4d215-e74f-533f-8781-9bf599438c8a/download",
             "uuid": "39b4d215-e74f-533f-8781-9bf599438c8a"
         },
@@ -277,3 +277,9 @@ After a while, you'll be able to know when all jobs have been completed :
     "uuid": "c42c19fd-eb19-4371-b57f-8edf53a40bba"
 }
 ```
+
+The status can be the following :
+- DOWNLOADING
+- CONVERTING TO TIFF
+- COMPLETE
+- FAILED
