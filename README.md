@@ -305,15 +305,3 @@ The status can be the following :
 For now the job queue is only persisted at server level. Should the server restart and the
 queue is gone, which is not desired. Some simple persistence layer such as Redis should be implemented.
 
-### An Actor Pool for each service
-
-Only one actor is dedicated for each service for now. This behavior is not recommended at all 
-since it will delay the execution of the requests. Ideally we would have a pool of actors that
-answers to request when ready and that take request as a job if not.
-
-### A server configuration file
-
-The server should be dynamically configured by a simple configuration file.
-The server physical limitation (such as RAM, thread, etc) could be assigned in this file.
-The global variables shared in the code (APIs url, etc) should be declared in this file.
-
