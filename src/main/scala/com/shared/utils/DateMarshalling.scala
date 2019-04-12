@@ -17,7 +17,7 @@ object DateMarshalling {
   }
 
   private val localIsoDateFormatter = new ThreadLocal[SimpleDateFormat] {
-    override def initialValue() = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    override def initialValue() = new SimpleDateFormat("yyyy-MM-dd")
   }
 
   private def dateToIsoString(date: Date) =

@@ -8,7 +8,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.util.Timeout
 import com.sentinel.SentinelRegistryActor.SentinelInfo
-import com.shared.{BoundingBox, ImageInfo, JsonSupport}
+import com.shared.{DatedBoundingBox, ImageInfo, JsonSupport}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -22,8 +22,8 @@ class SentinelRouter(sentinelRegistryActor: ActorRef) extends JsonSupport {
   lazy val route: Route = pathEndOrSingleSlash {
 
     post {
-      entity(as[BoundingBox]) { boundingBox =>
-        val sentinelInfo: Future[Vector[ImageInfo]] = (sentinelRegistryActor ? SentinelInfo(boundingBox)).mapTo[Vector[ImageInfo]]
+      entity(as[DatedBoundingBox]) { box =>
+        val sentinelInfo: Future[Vector[ImageInfo]] = (sentinelRegistryActor ? SentinelInfo(box)).mapTo[Vector[ImageInfo]]
         complete(StatusCodes.OK, sentinelInfo)
       }
     }
