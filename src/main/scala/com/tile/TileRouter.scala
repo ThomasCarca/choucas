@@ -25,21 +25,21 @@ class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) e
   implicit lazy val timeout: Timeout = Timeout(180.seconds)
 
   lazy val route: Route = {
-    get {
-      path(Segment) { imageName =>
-        tileRegistryActor ! TileImage(imageName)
-        complete(StatusCodes.Accepted)
-      }
-    }
-  } ~
-  post {
-    entity(as[Vector[String]]) { urls =>
-      val futureQueue: Future[JobQueue] = (downloadRegistryActor ? DownloadImages(urls)).mapTo[JobQueue]
-      onComplete(futureQueue) {
-        case Failure(_) => complete(StatusCodes.ServiceUnavailable)
-        case Success(queue) => {
-          JobQueues.queues = JobQueues.queues + (queue.uuid -> queue)
-          complete(StatusCodes.Accepted, new JobQueueLocation(s"queue/${queue.uuid}"))
+    //    get {
+    //      path(Segment) { imageName =>
+    //        tileRegistryActor ! TileImage(imageName)
+    //        complete(StatusCodes.Accepted)
+    //      }
+    //    }
+    post {
+      entity(as[Vector[String]]) { urls =>
+        val futureQueue: Future[JobQueue] = (downloadRegistryActor ? DownloadImages(urls)).mapTo[JobQueue]
+        onComplete(futureQueue) {
+          case Failure(_) => complete(StatusCodes.ServiceUnavailable)
+          case Success(queue) => {
+            JobQueues.queues = JobQueues.queues + (queue.uuid -> queue)
+            complete(StatusCodes.Accepted, new JobQueueLocation(s"queue/${queue.uuid}"))
+          }
         }
       }
     }

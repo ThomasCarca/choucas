@@ -30,16 +30,24 @@ final case class JobQueue() {
     this.jobs = this.jobs.map(job => if (job.uuid == uuid) new Job(job.uuid, job.url, status) else job)
   }
 
-  def start(uuid: String) = {
-    markJobAs(uuid)("STARTED")
+  def markJobAsDownloading(uuid: String) = {
+    markJobAs(uuid)("DOWNLOADING")
   }
 
-  def complete(uuid: String) = {
+  def markJobAsConvertingToTiff(uuid: String) = {
+    markJobAs(uuid)("CONVERTING TO TIFF")
+  }
+
+  def markJobAsTiling(uuid: String) = {
+    markJobAs(uuid)("TILING")
+  }
+
+  def markJobAsCompleted(uuid: String) = {
     markJobAs(uuid)("COMPLETE")
     this.done += 1
   }
 
-  def fail(uuid: String) = {
+  def markJobAsFailed(uuid: String) = {
     markJobAs(uuid)("FAILURE")
     this.done += 1
   }

@@ -1,7 +1,7 @@
 package com.tile
 
 import akka.actor.{Actor, ActorLogging, Props}
-import SaveService
+import SaveService._
 
 object SaveRegistryActor {
   final case class SaveImageWithHdfs(imageName: String)
@@ -12,7 +12,7 @@ class SaveRegistryActor extends Actor with ActorLogging{
   import SaveRegistryActor._
 
   def receive: Receive = {
-    case SaveImageWithHdfs(imageName) =>
-      SaveService.SaveImageWithHdfs(imageName)
+    case SaveImageWithHdfs(imageName) => ???
+      //SaveService.saveImageWithHdfs(imageName)
   }
 }

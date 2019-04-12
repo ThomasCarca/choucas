@@ -230,7 +230,7 @@ will return :
 {
     "jobs": [
         {
-            "status": "STARTED",
+            "status": "DOWNLOADING",
             "url": "https://peps.cnes.fr/resto/collections/S2/39b4d215-e74f-533f-8781-9bf599438c8a/download",
             "uuid": "39b4d215-e74f-533f-8781-9bf599438c8a"
         },
@@ -277,6 +277,12 @@ After a while, you'll be able to know when all jobs have been completed :
     "uuid": "c42c19fd-eb19-4371-b57f-8edf53a40bba"
 }
 ```
+The status can be the following :
+- DOWNLOADING
+- CONVERTING TO TIFF
+- TILING
+- COMPLETE
+- FAILED
 
 ## Improvements to be done
 
@@ -296,3 +302,4 @@ answers to request when ready and that take request as a job if not.
 The server should be dynamically configured by a simple configuration file.
 The server physical limitation (such as RAM, thread, etc) could be assigned in this file.
 The global variables shared in the code (APIs url, etc) should be declared in this file.
+

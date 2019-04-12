@@ -2,27 +2,28 @@ package com.tile
 
 import java.io.File
 
-import com.shared.{Job, JobQueues}
+import com.shared.{JobQueue}
 import spray.json.DefaultJsonProtocol
 
 import scala.sys.process.Process
-import scala.util.Try
 
 object TileService extends DefaultJsonProtocol {
 
-  def tileImage(job: Job): Try[Any] = {
-    val queue = JobQueues.queues.get(job.uuid)
-    val file = getImageNameInDirectory(job.uuid)
-    file match {
-      case "" => queue.fail(job.uuid)
-      case _ => {
-        val commands = "gdal2tiles.py res/" + file
-        val doGdalPython = Process(commands).!!
-        val moveToZip = Process(s"zip -r res/${job.uuid}.zip res/${job.uuid} res/${job.uuid}.tiff").!!
-        SaveService.saveImageWithHdfs(job)
+  def tileImage(queue: JobQueue): Unit = {
+    queue.jobs.foreach(job => {
+      queue.markJobAsTiling(job.uuid)
+      val file = getImageNameInDirectory(job.uuid)
+      file match {
+        case "" => queue.markJobAsFailed(job.uuid)
+        case _ => {
+          val commands = "gdal2tiles.py res/" + file
+          val doGdalPython = Process(commands).!!
+          val moveToZip = Process(s"zip -r res/${job.uuid}.zip res/${job.uuid} res/${job.uuid}.tiff").!!
+          queue.markJobAsCompleted(job.uuid)
+          SaveService.saveImageWithHdfs(job)
+        }
       }
-    }
-
+    })
   }
 
   def getImageNameInDirectory(imageName: String): String = {

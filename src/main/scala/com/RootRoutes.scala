@@ -14,7 +14,6 @@ import com.box.BoxRouter
 import com.queue.QueueRouter
 import com.elasticSearch.ElasticSearchRoute
 import com.sentinel.SentinelRouter
-import com.save.SaveRouter
 
 trait RootRoutes {
 
@@ -54,9 +53,6 @@ trait RootRoutes {
       } ~
       pathPrefix("queue") {
         new QueueRouter(queueRegistryActor).route
-      } ~
-      pathPrefix("save") {
-        new SaveRouter(saveRegistryActor).route
       } ~
       pathPrefix("elastic") {
         new ElasticSearchRoute(elasticSearchActor).route
