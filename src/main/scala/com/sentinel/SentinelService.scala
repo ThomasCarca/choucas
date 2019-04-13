@@ -3,17 +3,20 @@ package com.sentinel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import com.shared.{BoundingBox, ImageInfo}
+import com.shared.{DatedBoundingBox, ImageInfo}
 import scalaj.http.Http
 import play.api.libs.json.{JsArray, JsDefined, JsNumber, Json, JsValue => PlayValue}
 
 
 object SentinelService {
 
-  private val formatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  private val defaultFormatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  private val simpleFormatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
 
-  def fetchImagesInfo(box: BoundingBox): Vector[ImageInfo] = {
-    val response = Http(s"https://peps.cnes.fr/resto/api/collections/S2/search.json?box=${box.toString()}&startDate=2016-12-01&completionDate=2018-12-31").header("Accept", "application/json").asString
+  def fetchImagesInfo(box: DatedBoundingBox): Vector[ImageInfo] = {
+    val startDate = simpleFormatter.format(box.startDate)
+    val completionDate = simpleFormatter.format(box.completionDate)
+    val response = Http(s"https://peps.cnes.fr/resto/api/collections/S2/search.json?maxRecords=9999&box=${box.toString}&startDate=$startDate&completionDate=$completionDate").header("Accept", "application/json").asString
     val body : PlayValue = Json.parse(response.body)
     extractImagesInfo(body)
   }
@@ -37,7 +40,7 @@ object SentinelService {
       case JsNumber(value) => value.toFloat
       case _ => Float.NaN
     }
-    val date: Date = formatter.parse((properties \ "startDate").get.as[String])
+    val date: Date = defaultFormatter.parse((properties \ "startDate").get.as[String])
     ImageInfo(download, preview, cloud, date)
   }
 

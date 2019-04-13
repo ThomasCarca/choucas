@@ -155,7 +155,7 @@ will return :
 ### [5] The sentinel service
 
 The sentinel service will return a list of sentinel images information given 
-a bounding box that delimits the perimeter of the sentinel images.
+a bounding box that delimits the perimeter of the sentinel images and a date interval.
 The information about the images contains the download url, the preview url, 
 the cloud percentage if available, and the date of the shot.
 
@@ -164,13 +164,15 @@ with body :
 ```
 {
     "neCoordinates": {
-        "lat": 43.3210563659668,
-        "lon": -0.3057760000228882
+        "lat": 51.513824462890625,
+        "lon": 7.471989631652832
     },
     "swCoordinates": {
-        "lat": 43.260074615478516,
-        "lon": -0.4187789857387543
-    }
+        "lat": 41.64936828613281,
+        "lon": -0.8910340070724487
+    },
+    "startDate": "2016-01-01",
+    "completionDate": "2016-01-03"
 }
 ```
 will return : 
@@ -179,16 +181,28 @@ will return :
 
 [
     {
-        "cloud": 3.850100040435791,
-        "date": "2016-12-04T07:22:52.000Z",
-        "download": "https://peps.cnes.fr/resto/collections/S2/9d7d3644-3b5d-5bb7-affe-825783fcdad3/download",
-        "preview": "https://peps.cnes.fr/quicklook/2016/12/04/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20161204T134222_R006_V20161204T072252_20161204T072252_quicklook.jpg"
+        "cloud": 0.5714285969734192,
+        "date": "2016-01-02",
+        "download": "https://peps.cnes.fr/resto/collections/S2/00e550d9-87a6-5c65-8244-09aa710e0b96/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/01/02/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20160107T001924_R049_V20160102T075903_20160102T075903_quicklook.jpg"
     },
     {
-        "cloud": 14.562800407409668,
-        "date": "2016-12-04T07:22:52.000Z",
-        "download": "https://peps.cnes.fr/resto/collections/S2/fb58472d-7006-5b7e-a2a0-3a8b052f013b/download",
-        "preview": "https://peps.cnes.fr/quicklook/2016/12/04/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20161204T132939_R006_V20161204T072252_20161204T072252_quicklook.jpg"
+        "cloud": 4.538461685180664,
+        "date": "2016-01-02",
+        "download": "https://peps.cnes.fr/resto/collections/S2/5dfaec17-e7df-5e02-8997-b122390203af/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/01/02/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20160107T003231_R049_V20160102T075903_20160102T075903_quicklook.jpg"
+    },
+    {
+        "cloud": 3.857142925262451,
+        "date": "2016-01-02",
+        "download": "https://peps.cnes.fr/resto/collections/S2/129b244e-93a0-587f-8c6b-c88617d01e9a/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/01/02/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20160102T145207_R049_V20160102T074835_20160102T074835_quicklook.jpg"
+    },
+    {
+        "cloud": 5.9285712242126465,
+        "date": "2016-01-02",
+        "download": "https://peps.cnes.fr/resto/collections/S2/1c8bd18c-e8c8-5d7b-aac5-8773f4850b55/download",
+        "preview": "https://peps.cnes.fr/quicklook/2016/01/02/S2A/S2A_OPER_PRD_MSIL1C_PDMC_20160102T145948_R049_V20160102T074835_20160102T074835_quicklook.jpg"
     }
 ]
 ```
@@ -291,16 +305,4 @@ The status can be the following :
 
 For now the job queue is only persisted at server level. Should the server restart and the
 queue is gone, which is not desired. Some simple persistence layer such as Redis should be implemented.
-
-### An Actor Pool for each service
-
-Only one actor is dedicated for each service for now. This behavior is not recommended at all 
-since it will delay the execution of the requests. Ideally we would have a pool of actors that
-answers to request when ready and that take request as a job if not.
-
-### A server configuration file
-
-The server should be dynamically configured by a simple configuration file.
-The server physical limitation (such as RAM, thread, etc) could be assigned in this file.
-The global variables shared in the code (APIs url, etc) should be declared in this file.
 

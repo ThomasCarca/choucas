@@ -12,7 +12,9 @@ object SaveService {
       queue.markJobAsSavingToThorusCloud(job.uuid)
       saveImageWithHdfs(job) match {
         case Failure(_) => queue.markJobAsFailed(job.uuid)
-        case Success(_) => queue.markJobAsCompleted(job.uuid)
+        case Success(_) => {
+          queue.markJobAsCompleted(job.uuid)
+        }
       }
     })
   }
