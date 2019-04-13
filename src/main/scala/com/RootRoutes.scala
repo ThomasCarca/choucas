@@ -1,6 +1,6 @@
 package com
 
-import akka.actor.{ActorRef, ActorSystem}
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.util.Timeout
@@ -14,7 +14,7 @@ import com.box.BoxRouter
 import com.queue.QueueRouter
 import com.elasticSearch.ElasticSearchRoute
 import com.sentinel.SentinelRouter
-import com.save.SaveRouter
+import com.tile.SaveRegistryActor
 
 trait RootRoutes {
 
@@ -54,9 +54,6 @@ trait RootRoutes {
       } ~
       pathPrefix("queue") {
         new QueueRouter(queueRegistryActor).route
-      } ~
-      pathPrefix("save") {
-        new SaveRouter(saveRegistryActor).route
       } ~
       pathPrefix("elastic") {
         new ElasticSearchRoute(elasticSearchActor).route

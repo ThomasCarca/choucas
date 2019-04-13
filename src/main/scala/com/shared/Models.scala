@@ -2,19 +2,22 @@ package com.shared
 
 import java.util.Date
 import java.util.UUID.randomUUID
+import spray.json._
+import com.shared.JsonSupport
 
 final case class URIs(uris: Vector[String])
 
 final case class ImageInfo(download: String, preview: String, cloud: Float, date: Date)
 
 final case class Coordinates(lat: Float, lon: Float)
-
 final case class BoundingBox(swCoordinates: Coordinates, neCoordinates: Coordinates) {
   override def toString(): String = {
     s"${swCoordinates.lat},${swCoordinates.lon},${neCoordinates.lat},${neCoordinates.lon}"
   }
+  def toJsonQuery(): String = {
+    return "toto"
+  }
 }
-
 
 final case class Job(uuid: String, url: String, status: String = "PENDING")
 
@@ -49,11 +52,20 @@ final case class JobQueue() {
   }
 
   def asStaticJobQueue(): StaticJobQueue = {
-    new StaticJobQueue(uuid,s"$done/$total", jobs)
+    new StaticJobQueue(uuid, s"$done/$total", jobs)
   }
 }
 
 final case class JobQueueLocation(location: String)
-final case class MetaData(data: Vector[String])
-final case class Tuile(download: String, name: String, metaData: MetaData)
-final case class DataElastic(box: BoundingBox, tuiles: Vector[Tuile], image: ImageInfo, metaData: MetaData)
+
+final case class Tuile(download: String, name: String, metadata: String)
+
+final case class DataElastic(coord: Coordinates, tuiles: Tuile, image: ImageInfo, metadata: String) {
+  def toJsonIndexCreate(): String = {
+    return s""" {"coordonates" : ${coord.toJson(JsonSupportObject.coordinateJsonFormat)},
+                                |"tuile" : ${tuiles.toJson(JsonSupportObject.tuileJsonFormat)},
+                                |"image" : ${image.toJson(JsonSupportObject.imageInfoJsonFormat)},
+                                |"metadata" : "${metadata}"}""".stripMargin
+  }
+
+}
