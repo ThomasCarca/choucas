@@ -299,7 +299,7 @@ The status can be the following :
 - COMPLETE
 - FAILED
 
-###[7] Send data To Elastic search
+### [7] Send data To Elastic search
 
 Build mapping Elastic search
 **POST /elastic/mapping/**  
@@ -319,16 +319,16 @@ with body :
 	},
 	"tuiles" : {
 		"download" : "path to download tuile",
-	"name" : "name of the tuile",
-	"metadata" : "data related to the tuile"
+	        "name" : "name of the tuile",
+	        "metadata" : "data related to the tuile"
 	},
 	"image" : {
-        "download" : "kpokzokpfez",
-	    "preview" : "path to download tuile",
+            "download" : "path to download",
+	    "preview" : "preview of the image",
 	    "cloud" : 1.0,
 	    "date" : "1994-11-05T08:15:30-05:00"
 	},
-	"metadata" : "kfrejgierjg"
+	"metadata" : "information that give use the tuile"
 }
 ```
 
@@ -347,7 +347,7 @@ with body :
         "lon": -10.3057760000228882
     },
     "swCoordinates": {
-        "lat": 12.260074615478516,
+        "lat": 1.260074615478516,
         "lon": -0.4187789857387543
     }
 }
@@ -361,17 +361,17 @@ You will be able to get the response:
 "_source":{
     "coordonates":"5.0,5.0",
     "tuile":{
-        "download":"htdzqdzqd",
-        "metadata":"zadadaass",
-        "name":"efzf"
+        "download":"path to download data",
+        "metadata":"information about the tuile",
+        "name":"name of the tuile"
      },
      "image":{
         "cloud":1,
         "date":"1994-11-05",
-        "download":"kpokzokpfez",
-        "preview":"plpl"
+        "download":"path to download",
+        "preview":"preview of the image"
      },
-     "metadata":"kfrejgierjg"
+     "metadata":"information that give use the tuile"
    }
 }]
 
