@@ -1,11 +1,11 @@
 package com.sentinel
 
 import akka.actor.{Actor, ActorLogging, Props}
-import com.shared.BoundingBox
+import com.shared.DatedBoundingBox
 
 
 object SentinelRegistryActor {
-  final case class SentinelInfo(box: BoundingBox)
+  final case class SentinelInfo(box: DatedBoundingBox)
   def props: Props = Props[SentinelRegistryActor]
 }
 

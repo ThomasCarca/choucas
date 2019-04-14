@@ -20,17 +20,17 @@ object Server extends App with RootRoutes {
 
   implicit val system: ActorSystem = ActorSystem("choucas-server")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
-  implicit val executionContext: ExecutionContext = system.dispatcher
+  implicit val executionContext: ExecutionContext = system.dispatchers.lookup("my-blocking-dispatcher")
 
   val annotateRegistryActor: ActorRef = system.actorOf(AnnotateRegistryActor.props, "annotateRegistryActor")
-  val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props, "hikeRegistryActor")
+  val hikeRegistryActor: ActorRef = system.actorOf(HikeRegistryActor.props.withDispatcher("my-blocking-dispatcher"), "hikeRegistryActor")
   val pinpointRegistryActor: ActorRef = system.actorOf(PinpointRegistryActor.props, "pinpointRegistryActor")
   val boxRegistryActor: ActorRef = system.actorOf(BoxRegistryActor.props, "boxRegistryActor")
-  val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props, "sentinelRegistryActor")
-  val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props, "tileRegistryActor")
-  val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props, "downloadRegistryActor")
+  val sentinelRegistryActor: ActorRef = system.actorOf(SentinelRegistryActor.props.withDispatcher("my-blocking-dispatcher"), "sentinelRegistryActor")
+  val tileRegistryActor: ActorRef = system.actorOf(TileRegistryActor.props.withDispatcher("my-blocking-dispatcher"), "tileRegistryActor")
+  val downloadRegistryActor: ActorRef = system.actorOf(DownloadRegistryActor.props.withDispatcher("my-blocking-dispatcher"), "downloadRegistryActor")
   val queueRegistryActor: ActorRef = system.actorOf(QueueRegistryActor.props, "queueRegistryActor")
-  val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props, "saveRegistryActor")
+  val saveRegistryActor: ActorRef = system.actorOf(SaveRegistryActor.props.withDispatcher("my-blocking-dispatcher"), "saveRegistryActor")
   val elasticSearchActor: ActorRef = system.actorOf(ElasticSearchActor.props, "elasticSearchActor")
 
   lazy val routes: Route = rootRoutes

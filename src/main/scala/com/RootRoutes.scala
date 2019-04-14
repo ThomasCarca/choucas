@@ -14,7 +14,6 @@ import com.box.BoxRouter
 import com.queue.QueueRouter
 import com.elasticSearch.ElasticSearchRoute
 import com.sentinel.SentinelRouter
-import com.tile.SaveRegistryActor
 
 trait RootRoutes {
 
