@@ -10,27 +10,21 @@ import akka.http.scaladsl.server.directives.FutureDirectives.onComplete
 import akka.pattern.ask
 import com.shared.{JobQueue, JobQueueLocation, JobQueues, JsonSupport}
 import com.tile.DownloadRegistryActor.DownloadImages
+import com.tile.SaveRegistryActor.SaveImageWithHdfs
 import com.tile.TileRegistryActor.TileImage
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
-class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) extends JsonSupport {
+class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef, saveRegistryActor: ActorRef) extends JsonSupport {
 
   import DefaultJsonProtocol._
 
   implicit lazy val timeout: Timeout = Timeout(180.seconds)
 
   lazy val route: Route = {
-    //    get {
-    //      path(Segment) { imageName =>
-    //        tileRegistryActor ! TileImage(imageName)
-    //        complete(StatusCodes.Accepted)
-    //      }
-    //    }
     post {
       entity(as[Vector[String]]) { urls =>
         val futureQueue: Future[JobQueue] = (downloadRegistryActor ? DownloadImages(urls)).mapTo[JobQueue]
@@ -38,10 +32,21 @@ class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) e
           case Failure(_) => complete(StatusCodes.ServiceUnavailable)
           case Success(queue) => {
             JobQueues.queues = JobQueues.queues + (queue.uuid -> queue)
-
-            (tileRegistryActor ? TileImage(queue))
             complete(StatusCodes.Accepted, new JobQueueLocation(s"queue/${queue.uuid}"))
-            //val
+
+            val futureTileQueue: Future[JobQueue] = (tileRegistryActor ? TileImage(queue)).mapTo[JobQueue]
+            onComplete(futureTileQueue) {
+              case Failure(_) => complete(StatusCodes.ServiceUnavailable)
+              case Success(tileQueue) => {
+                complete(StatusCodes.Continue)
+
+                val futureSaveQueue: Future[JobQueue] = (saveRegistryActor ? SaveImageWithHdfs(queue)).mapTo[JobQueue]
+                onComplete(futureSaveQueue) {
+                  case Failure(_) => complete(StatusCodes.ExpectationFailed)
+                  case Success(saveQueue) => complete(StatusCodes.Accepted)
+                }
+              }
+            }
           }
         }
 

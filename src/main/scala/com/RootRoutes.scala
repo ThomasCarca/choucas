@@ -49,7 +49,7 @@ trait RootRoutes {
         new SentinelRouter(sentinelRegistryActor).route
       } ~
       pathPrefix("tile") {
-        new TileRouter(downloadRegistryActor, tileRegistryActor).route
+        new TileRouter(downloadRegistryActor, tileRegistryActor, saveRegistryActor).route
       } ~
       pathPrefix("queue") {
         new QueueRouter(queueRegistryActor).route
