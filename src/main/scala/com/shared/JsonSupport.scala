@@ -15,8 +15,9 @@ trait JsonSupport extends SprayJsonSupport {
   implicit val jobJsonFormat: RootJsonFormat[Job] = jsonFormat3(Job)
   implicit val staticJobQueueJsonFormat: RootJsonFormat[StaticJobQueue] = jsonFormat3(StaticJobQueue)
   implicit val jobQueueLocationJsonFormat: RootJsonFormat[JobQueueLocation] = jsonFormat1(JobQueueLocation)
-  implicit val metaDataJsonFormat: RootJsonFormat[MetaData] = jsonFormat1(MetaData)
   implicit val tuileJsonFormat: RootJsonFormat[Tuile] = jsonFormat3(Tuile)
   implicit val elasticSearchJsonFormat: RootJsonFormat[DataElastic] = jsonFormat4(DataElastic)
 
 }
+
+object JsonSupportObject extends SprayJsonSupport with JsonSupport

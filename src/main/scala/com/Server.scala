@@ -1,9 +1,9 @@
 package com
 
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
-import akka.actor.{ActorRef, ActorSystem}
+import scala.util.{ Failure, Success }
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
@@ -14,7 +14,7 @@ import com.box.BoxRegistryActor
 import com.elasticSearch.ElasticSearchActor
 import com.sentinel.SentinelRegistryActor
 import com.queue.QueueRegistryActor
-import com.tile.{DownloadRegistryActor, SaveRegistryActor, TileRegistryActor}
+import com.tile.{ DownloadRegistryActor, SaveRegistryActor, TileRegistryActor }
 
 object Server extends App with RootRoutes {
 

@@ -1,18 +1,18 @@
 package com.tile
 
-import java.io.{BufferedOutputStream, File, FileOutputStream}
-import java.nio.file.{Files, Path, Paths}
+import java.io.{ BufferedOutputStream, File, FileOutputStream }
+import java.nio.file.{ Files, Path, Paths }
 import java.util.Base64
 
-import scala.util.{Failure, Success, Try}
-import com.shared.{Job, JobQueue}
+import scala.util.{ Failure, Success, Try }
+import com.shared.{ Job, JobQueue }
 import scalaj.http.Http
 
 import scala.sys.process.Process
 
 object DownloadService {
 
-  def downloadImages(queue: JobQueue): Unit  = {
+  def downloadImages(queue: JobQueue): Unit = {
     queue.jobs.foreach(job => {
 
       val destination: Path = Paths.get(s"res/${job.uuid}/")
@@ -27,9 +27,9 @@ object DownloadService {
           unzip(zip, destination)
             .flatMap(extractSubDataSet)
             .flatMap(convertToTiff(_)(tiff)) match {
-            case Failure(_) => queue.markJobAsFailed(job.uuid)
-            case Success(_) => queue.markJobAsCompleted(job.uuid)
-          }
+              case Failure(_) => queue.markJobAsFailed(job.uuid)
+              case Success(_) => queue.markJobAsCompleted(job.uuid)
+            }
         }
       }
     })
@@ -78,10 +78,10 @@ object DownloadService {
   }
 
   def unzip(zip: Path, destination: Path): Try[Path] = Try {
-      Process(s"unzip $zip -d $destination").!!
-      Files.deleteIfExists(zip)
-      destination
-    }
+    Process(s"unzip $zip -d $destination").!!
+    Files.deleteIfExists(zip)
+    destination
+  }
 
   def deleteRecursively(file: File): Unit = {
     if (file.isDirectory)
