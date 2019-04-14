@@ -299,6 +299,85 @@ The status can be the following :
 - COMPLETE
 - FAILED
 
+###[7] Send data To Elastic search
+
+Build mapping Elastic search
+**POST /elastic/mapping/**  
+
+Return message
+```
+Request sended
+```
+
+**POST /elastic/**  
+with body :  
+```
+{
+	"coord" : {
+		"lat" :5.0,
+		"lon" :5.0
+	},
+	"tuiles" : {
+		"download" : "path to download tuile",
+	"name" : "name of the tuile",
+	"metadata" : "data related to the tuile"
+	},
+	"image" : {
+        "download" : "kpokzokpfez",
+	    "preview" : "path to download tuile",
+	    "cloud" : 1.0,
+	    "date" : "1994-11-05T08:15:30-05:00"
+	},
+	"metadata" : "kfrejgierjg"
+}
+```
+
+```
+200 OK
+```
+
+###[8] Get tuile from Elastic search
+
+**GET /elastic/**  
+with body :  
+```
+{
+    "neCoordinates": {
+        "lat": 23.3210563659668,
+        "lon": -10.3057760000228882
+    },
+    "swCoordinates": {
+        "lat": 12.260074615478516,
+        "lon": -0.4187789857387543
+    }
+}
+```
+You will be able to get the response: 
+```
+[{"_index":"choucas",
+"_type":"metadata",
+"_id":"TGN8G2oB9y2Bpzh4nIXz",
+"_score":1,
+"_source":{
+    "coordonates":"5.0,5.0",
+    "tuile":{
+        "download":"htdzqdzqd",
+        "metadata":"zadadaass",
+        "name":"efzf"
+     },
+     "image":{
+        "cloud":1,
+        "date":"1994-11-05",
+        "download":"kpokzokpfez",
+        "preview":"plpl"
+     },
+     "metadata":"kfrejgierjg"
+   }
+}]
+
+```
+
+
 ## Improvements to be done
 
 ### A dedicated backend for the job queue
@@ -307,4 +386,3 @@ For now the job queue is only persisted at server level. Should the server resta
 queue is gone, which is not desired. Some simple persistence layer such as Redis should be implemented.
 
 
-[{"_index":"choucas","_type":"metadata","_id":"TGN8G2oB9y2Bpzh4nIXz","_score":1,"_source":{"coordonates":"5.0,5.0","tuile":{"download":"htdzqdzqd","metadata":"zadadaass","name":"efzf"},"image":{"cloud":1,"date":"1994-11-05","download":"kpokzokpfez","preview":"plpl"},"metadata":"kfrejgierjg"}},{"_index":"choucas","_type":"metadata","_id":"TWONG2oB9y2Bpzh4qoVp","_score":1,"_source":{"coordonates":"5.0,5.0","tuile":{"download":"htdzq","metadata":"zadaass","name":"efzdaadf"},"image":{"cloud":1,"date":"1994-11-05","download":"kpokzokpfez","preview":"plpl"},"metadata":"kfrejgierjg"}}]
