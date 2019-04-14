@@ -11,7 +11,7 @@ import scala.util.{Failure, Success, Try}
 
 object TileService extends DefaultJsonProtocol {
 
-  def tileImage(queue: Future[JobQueue]): Unit = {
+  def tileImage(queue: JobQueue): Unit = {
     queue.jobs.foreach(job => {
       queue.markJobAsTiling(job.uuid)
       val file = getImageNameInDirectory(job.uuid)

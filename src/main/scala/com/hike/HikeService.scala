@@ -13,7 +13,7 @@ object HikeService {
     filterIdOrigin(response)
   }
 
-  def GetHikeById(id: String) : String = {
+  def getHikeById(id: String) : String = {
     val response = Http("https://choucas.blqn.fr/data/outing/".concat(id)).header("Accept", "application/json").asString
     filterDescription(response).toString()
   }

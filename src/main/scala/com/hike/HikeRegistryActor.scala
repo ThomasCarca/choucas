@@ -16,7 +16,7 @@ class HikeRegistryActor extends Actor with ActorLogging {
     case GetHikes =>
       sender() ! HikeService.getAllHikes
     case GetHikeById(id) =>
-      sender() ! HikeService.GetHikeById(id)
+      sender() ! HikeService.getHikeById(id)
 
   }
 }

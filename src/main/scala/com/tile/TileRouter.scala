@@ -39,9 +39,9 @@ class TileRouter(downloadRegistryActor: ActorRef, tileRegistryActor: ActorRef) e
           case Success(queue) => {
             JobQueues.queues = JobQueues.queues + (queue.uuid -> queue)
 
-            (tileRegistryActor ? TileImage(futureQueue))
+            (tileRegistryActor ? TileImage(queue))
             complete(StatusCodes.Accepted, new JobQueueLocation(s"queue/${queue.uuid}"))
-            val
+            //val
           }
         }
 
