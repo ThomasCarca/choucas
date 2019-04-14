@@ -9,7 +9,7 @@
 In this section will be described the different services and endpoints.
 
 ### [1] The hike service
-The hike service will have 2 functions. The first one will return the list of ids of hikes and the second one 
+The hike service will have 2 functions. The first one will return the list of ids of hikes and the second one
 will return the description for a selected hike.
 
 **GET /hike/**
@@ -31,22 +31,22 @@ will return
 ```
 200 OK
 
-"Cette pointe est une valeur sure pour une rando-vol dans cette belle vallée de Sixt. Un des rares sommet 
-décollable en parapente à cause de la réserve naturelle.\nAttéro dans les grands champs fauchés vers 
+"Cette pointe est une valeur sure pour une rando-vol dans cette belle vallée de Sixt. Un des rares sommet
+décollable en parapente à cause de la réserve naturelle.\nAttéro dans les grands champs fauchés vers
 l’école de Sixt.\nItinéraire du topo depuis Le Crot.\nBon sentier, sec."
 ```
 
 ### [2] The annotate service
 
-The annotate service will return a list of URI for each word it finds on dbpedia 
+The annotate service will return a list of URI for each word it finds on dbpedia
 in a given text, using semantics.
 
 
 **POST /annotate/**  
 with body :  
 ```
-{ 
-    "text": "Pau is a city in France." 
+{
+    "text": "Pau is a city in France."
 }  
 ```
 will return :  
@@ -114,7 +114,7 @@ will return :
 ### [4] The box service
 
 The box service will return a bounding box containing all points given in a list.
-The bounding box is represented by two points (one at south west and one at north east) 
+The bounding box is represented by two points (one at south west and one at north east)
 that delimit the lower left corner and upper right corner.
 
 **POST /box/**  
@@ -135,7 +135,7 @@ with body :
 	}
 ]
 ```
-will return : 
+will return :
 ```
 200 OK
 
@@ -154,9 +154,9 @@ will return :
 
 ### [5] The sentinel service
 
-The sentinel service will return a list of sentinel images information given 
+The sentinel service will return a list of sentinel images information given
 a bounding box that delimits the perimeter of the sentinel images and a date interval.
-The information about the images contains the download url, the preview url, 
+The information about the images contains the download url, the preview url,
 the cloud percentage if available, and the date of the shot.
 
 **POST /sentinel/**  
@@ -175,7 +175,7 @@ with body :
     "completionDate": "2016-01-03"
 }
 ```
-will return : 
+will return :
 ```
 200 OK
 
@@ -209,8 +209,8 @@ will return :
 
 ### [6] The tile service
 
-The tile service will take a list of download urls 
-(that can be fetched from the sentinel service for instance) 
+The tile service will take a list of download urls
+(that can be fetched from the sentinel service for instance)
 and will tile each downloaded image. The tiles will then be uploaded to a HDFS.
 
 **POST /tile/**  
@@ -222,7 +222,7 @@ with body :
     "https://peps.cnes.fr/resto/collections/S2/83156d1b-5618-505e-a039-80efee85eb49/download"
 ]
 ```
-will return : 
+will return :
 ```
 202 Accepted
 
@@ -234,10 +234,10 @@ will return :
 Since this service is comprised of long running jobs, the server will automaticaly send back
 a 202 Accepted response to the client with a location body.
 
-You can then use the location to get information on the running jobs : 
+You can then use the location to get information on the running jobs :
 
 **GET /queue/:id**  
-will return : 
+will return :
 ```
 200 OK
 
@@ -301,7 +301,7 @@ The status can be the following :
 
 ### [7] Send data To Elastic search
 
-Build mapping Elastic search
+Build mapping for Elastic search
 **POST /elastic/mapping/**  
 
 Return message
@@ -336,7 +336,9 @@ with body :
 200 OK
 ```
 
-###[8] Get tuile from Elastic search
+### [8] Get tuile from Elastic search
+
+To get a tuile related to a bounding box:
 
 **GET /elastic/**  
 with body :  
@@ -352,7 +354,7 @@ with body :
     }
 }
 ```
-You will be able to get the response: 
+You will be able to get the response:
 ```
 [{"_index":"choucas",
 "_type":"metadata",
@@ -377,12 +379,9 @@ You will be able to get the response:
 
 ```
 
-
 ## Improvements to be done
 
 ### A dedicated backend for the job queue
 
 For now the job queue is only persisted at server level. Should the server restart and the
 queue is gone, which is not desired. Some simple persistence layer such as Redis should be implemented.
-
-
