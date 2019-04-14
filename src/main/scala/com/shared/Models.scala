@@ -49,6 +49,10 @@ final case class JobQueue() {
     markJobAs(uuid)("TILING")
   }
 
+  def markJobAsSavingToThorusCloud(uui: String): Unit = {
+    markJobAs(uuid)("SAVING TO THORUS CLOUD")
+  }
+
   def markJobAsCompleted(uuid: String): Unit = {
     markJobAs(uuid)("COMPLETE")
     this.done += 1

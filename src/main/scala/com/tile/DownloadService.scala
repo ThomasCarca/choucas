@@ -15,7 +15,7 @@ object DownloadService {
   def downloadImages(queue: JobQueue): Unit = {
     queue.jobs.foreach(job => {
 
-      val destination: Path = Paths.get(s"res/images/${job.uuid}/")
+      val destination: Path = Paths.get(s"res/${job.uuid}/")
       val tiff: Path = Paths.get(destination.toAbsolutePath.toString, s"${job.uuid}.tiff")
       val zip: Path = Paths.get(destination.toAbsolutePath.toString, s"${job.uuid}.zip")
 

@@ -295,6 +295,7 @@ The status can be the following :
 - DOWNLOADING
 - CONVERTING TO TIFF
 - TILING
+- SAVING TO THORUS CLOUD
 - COMPLETE
 - FAILED
 
