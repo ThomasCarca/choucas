@@ -2,13 +2,28 @@
 
 ## Dependencies
 
-Docker command to run elastic search container for testing
-
-```
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
-```
+- gdal2tiles python module
+- gdal_translate python module
+- gdalinfo python module
+- docker
+- scala
+- sbt
 
 ## Installation
+
+First, run the ElasticSearch container using the following command line :
+```
+$ docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+```
+
+Next, you can build the project, using the following command at the root of the project :
+
+`$ sbt compile`
+
+Once it's built, run the project using :
+
+`$ sbt run`
+
 
 ## API documentation
 
@@ -398,3 +413,7 @@ You will be able to get the response:
 
 For now the job queue is only persisted at server level. Should the server restart and the
 queue is gone, which is not desired. Some simple persistence layer such as Redis should be implemented.
+
+### Run the project on docker containers
+
+For now the project is deployed manually but we should implement containers to host the different modules.
