@@ -2,6 +2,12 @@
 
 ## Dependencies
 
+Docker command to run elastic search container for testing
+
+```
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+```
+
 ## Installation
 
 ## API documentation
@@ -305,12 +311,13 @@ Build mapping for Elastic search
 **POST /elastic/mapping/**  
 
 Return message
+
 ```
 Request sended
 ```
 
 **POST /elastic/**  
-with body :  
+with body :
 ```
 {
 	"coord" : {
@@ -323,7 +330,7 @@ with body :
 	        "metadata" : "data related to the tuile"
 	},
 	"image" : {
-            "download" : "path to download",
+      "download" : "path to download",
 	    "preview" : "preview of the image",
 	    "cloud" : 1.0,
 	    "date" : "1994-11-05T08:15:30-05:00"
@@ -341,7 +348,9 @@ with body :
 To get a tuile related to a bounding box:
 
 **GET /elastic/**  
-with body :  
+
+with body :
+
 ```
 {
     "neCoordinates": {
@@ -354,7 +363,11 @@ with body :
     }
 }
 ```
+
+
 You will be able to get the response:
+
+
 ```
 [{"_index":"choucas",
 "_type":"metadata",
